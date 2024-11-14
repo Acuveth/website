@@ -42,39 +42,39 @@ function UserDashboard() {
     <>
       <div className="flex min-h-screen bg-gray-900 p-4 text-white">
         {/* Left Sidebar */}
-        <aside className="w-1/4 p-4 bg-gray-800 rounded-lg">
+        <aside className="w-1/4 p-4 bg-gray-900 rounded-lg">
           <div className="grid grid-cols-2 gap-2 mb-4">
             {/* Four buttons for forms */}
             <button
               onClick={() => navigate("/form-objava")}
-              className="bg-red-600 hover:bg-red-700 rounded-lg p-3"
+              className="bg-custom-orange hover:bg-custom-orange-dark-20 rounded-lg px-3 py-4 font-semibold"
             >
               Naroči objavo
             </button>
             <button
               onClick={() => navigate("/form-story")}
-              className="bg-red-600 hover:bg-red-700 rounded-lg p-3"
+              className="bg-custom-orange hover:bg-custom-orange-dark-20 rounded-lg px-3 py-4 font-semibold"
             >
               Naroči story
             </button>
             <button
               onClick={() => navigate("/promotorji-objava")}
-              className="bg-red-600 hover:bg-red-700 rounded-lg p-3"
+              className="bg-custom-orange hover:bg-custom-orange-dark-20 rounded-lg px-3 py-4 font-semibold"
             >
               Naroči promotorje
             </button>
             <button
               onClick={() => navigate("/form-wir")}
-              className="bg-red-600 hover:bg-red-700 rounded-lg p-3"
+              className="bg-custom-orange hover:bg-custom-orange-dark-20 rounded-lg px-3 py-4 font-semibold"
             >
               Naroči week in review
             </button>
           </div>
           <button
             onClick={() => navigate("/plans")}
-            className="w-full bg-gray-700 hover:bg-gray-600 text-white py-2 rounded-lg mb-4"
+            className="w-full bg-gray-700 hover:bg-gray-800 text-white py-4 rounded-lg mb-4 font-semibold"
           >
-            Manage Subscription
+            Uredi Naročnino
           </button>
           <StatsPanel
             selectedEvent={selectedEvent}

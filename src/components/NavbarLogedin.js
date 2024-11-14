@@ -13,15 +13,15 @@ const NavbarLogedin = () => {
   const isOnDashboardPage = location.pathname === "/dashboard";
 
   return (
-    <nav className="bg-gray-800 px-4 py-2 shadow-lg">
-      <div className="container mx-auto flex justify-between items-center">
+    <nav className="bg-gray-900 px-4 py-2 shadow-lg">
+      <div className=" mx-auto flex justify-between items-center">
         {/* Logo and Title */}
-        <div className="flex items-center space-x-2 font-bold text-2xl text-white">
+        <div className="flex items-center mx-4 space-x-2 font-bold text-2xl text-white">
           <Link to="/dashboard" className="flex items-center">
             <img
               src={logo}
               alt="Študentski Dogodki Logo"
-              className="w-72 h-15 mr-2"
+              className="w-72 h-15"
             />
           </Link>
         </div>
@@ -31,21 +31,21 @@ const NavbarLogedin = () => {
           {isSubscribed || isOnDashboardPage ? (
             <Link
               to={isOnDashboardPage ? `/plans` : "/dashboard"}
-              className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded transition duration-300"
+              className="font-semibold text-white px-4 py-2 rounded transition duration-300 hover:bg-gray-800"
             >
               {isOnDashboardPage ? "Pregled planov" : "Pregled promocij"}
             </Link>
           ) : (
             <Link
               to={`/dashboard`}
-              className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded transition duration-300"
+              className="font-semibold text-white px-4 py-2 rounded transition duration-300 hover:bg-gray-800"
             >
               Dashboard
             </Link>
           )}
           <Link
             to={`/settings/${user.id}`} // Link to settings page
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition duration-300"
+            className="font-semibold text-white px-4 py-2 rounded transition duration-300 hover:bg-gray-800"
           >
             Nastavitve
           </Link>

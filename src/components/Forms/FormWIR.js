@@ -23,13 +23,16 @@ const ShortFormPage = () => {
     <>
       <NavbarLogedin />
 
-      <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
+      <div className="min-h-screen bg-gray-900 flex flex-col items-center">
         {/* Form Container */}
-        <div className="w-full max-w-sm p-6 bg-white shadow-md rounded-lg">
+        <div className="w-full max-w-sm p-6 bg-gray-900 shadow-md rounded-lg">
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Short Input Field 1 */}
+            <h1 className="text-2xl font-bold mb-6 text-center text-white">
+              Naroči Week in review
+            </h1>
             <div>
-              <label className="block text-gray-700 font-semibold mb-1">
+              <label className="block text-white font-semibold mb-1">
                 Lokacija Dogodka
               </label>
               <input
@@ -38,13 +41,13 @@ const ShortFormPage = () => {
                 value={formData.field1}
                 onChange={handleInputChange}
                 placeholder="Enter text"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full px-4 py-2 border border-gray-300 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-custom-orange"
               />
             </div>
 
             {/* Short Input Field 2 */}
             <div>
-              <label className="block text-gray-700 font-semibold mb-1">
+              <label className="block text-white font-semibold mb-1">
                 Ime Dogodka
               </label>
               <input
@@ -53,13 +56,13 @@ const ShortFormPage = () => {
                 value={formData.field2}
                 onChange={handleInputChange}
                 placeholder="Enter text"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full px-4 py-2 border border-gray-300 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-custom-orange"
               />
             </div>
 
             {/* Short Input Field 3 */}
             <div>
-              <label className="block text-gray-700 font-semibold mb-1">
+              <label className="block text-white font-semibold mb-1">
                 Začetek in Konec dogodka
               </label>
               <input
@@ -68,7 +71,7 @@ const ShortFormPage = () => {
                 value={formData.field3}
                 onChange={handleInputChange}
                 placeholder="Enter text"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full px-4 py-2 border border-gray-300 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-custom-orange"
               />
             </div>
 
@@ -76,7 +79,7 @@ const ShortFormPage = () => {
             <div className="text-center">
               <button
                 type="submit"
-                className="bg-red-500 text-white px-6 py-2 rounded-md font-bold hover:bg-red-600"
+                className="w-full bg-custom-orange text-white py-2 px-4 rounded-lg hover:bg-custom-orange-dark-20 transition duration-300"
               >
                 Send
               </button>

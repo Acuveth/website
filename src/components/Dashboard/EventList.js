@@ -4,7 +4,7 @@ import React from "react";
 function EventList({ posts, onEventSelect }) {
   return (
     <div className="bg-gray-800 text-white rounded-lg p-4 h-full overflow-y-auto">
-      <h2 className="text-lg font-semibold mb-4">Tvoji Dogodki</h2>
+      <h2 className="text-xl font-semibold mb-4">TVOJI DOGODKI</h2>
       <ul>
         {posts.map((post, index) => (
           <li

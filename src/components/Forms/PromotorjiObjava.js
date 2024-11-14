@@ -28,13 +28,16 @@ const DetailedFormPage = () => {
     <>
       <NavbarLogedin />
 
-      <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
+      <div className="min-h-screen bg-gray-900 flex flex-col items-center">
         {/* Form Container */}
-        <div className="w-full max-w-md p-6 bg-white shadow-md rounded-lg space-y-4">
+        <div className="w-full max-w-md p-6 bg-gray-900 shadow-md rounded-lg space-y-4">
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Media Upload */}
+            <h1 className="text-2xl font-bold mb-6 text-center text-white">
+              Naroči Promotorje
+            </h1>
             <div>
-              <label className="block text-gray-700 font-semibold mb-2">
+              <label className="block text-white font-semibold mb-2">
                 Naloži Sliko/Video
               </label>
               <input
@@ -45,15 +48,15 @@ const DetailedFormPage = () => {
               file:mr-4 file:py-2 file:px-4
               file:rounded-full file:border-0
               file:text-sm file:font-semibold
-              file:bg-blue-50 file:text-blue-700
-              hover:file:bg-blue-100
+              file:bg-yellow-50 file:text-yellow-700
+              hover:file:bg-yellow-100 my-4
               "
               />
             </div>
 
             {/* Long Form for Instructions */}
             <div>
-              <label className="block text-gray-700 font-semibold mb-2">
+              <label className="block text-white font-semibold mb-2">
                 Navodila
               </label>
               <textarea
@@ -61,13 +64,13 @@ const DetailedFormPage = () => {
                 value={formData.instructions}
                 onChange={handleInputChange}
                 placeholder="Enter instructions here..."
-                className="w-full h-32 px-4 py-2 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full h-32 px-4 py-2 border border-gray-300 bg-gray-800 text-white rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-custom-orange"
               />
             </div>
 
             {/* Short Input Field 1 */}
             <div>
-              <label className="block text-gray-700 font-semibold mb-1">
+              <label className="block text-white font-semibold mb-1">
                 Link do kart
               </label>
               <input
@@ -76,13 +79,13 @@ const DetailedFormPage = () => {
                 value={formData.shortField1}
                 onChange={handleInputChange}
                 placeholder="Enter text"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full px-4 py-2 border border-gray-300 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-custom-orange"
               />
             </div>
 
             {/* Short Input Field 2 */}
             <div>
-              <label className="block text-gray-700 font-semibold mb-1">
+              <label className="block text-white font-semibold mb-1">
                 Koga naj taggajo?
               </label>
               <input
@@ -91,7 +94,7 @@ const DetailedFormPage = () => {
                 value={formData.shortField2}
                 onChange={handleInputChange}
                 placeholder="Enter text"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full px-4 py-2 border border-gray-300 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-custom-orange"
               />
             </div>
 
@@ -99,7 +102,7 @@ const DetailedFormPage = () => {
             <div className="text-center">
               <button
                 type="submit"
-                className="bg-red-500 text-white px-6 py-2 rounded-md font-bold hover:bg-red-600"
+                className="w-full bg-custom-orange text-white py-2 px-4 rounded-lg hover:bg-custom-orange-dark-20 transition duration-300"
               >
                 Send
               </button>
