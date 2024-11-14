@@ -6,16 +6,20 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
-import Navbar from "./components/Navbar";
+import Navbar from "./Navbar/Navbar";
 import SubscriptionPlansPage from "./components/SubscriptionPlansPage";
 import Settings from "./components/Settings";
 import { UserProvider } from "./Context/UserContext"; // Only import the provider
 import PromotionForm from "./components/PromotionForm"; // Import PromotionForm
-
+import FeaturesScreen from "./LandingPage/FeaturesScreen";
+import Footer from "./LandingPage/Footer";
+import Features from "./LandingPage/Features";
+import Pricing from "./LandingPage/Pricing";
+import LandingPage from "./LandingPage/LandingPage";
+import Partners from "./LandingPage/Partners";
 // Import the form components
 import FormObjava from "./components/Forms/FormObjava";
 import FormStory from "./components/Forms/FormStory";
@@ -36,7 +40,12 @@ function App() {
                 element={
                   <>
                     <Navbar />
-                    <Home />
+                    <LandingPage />
+                    <Partners />
+                    <Features />
+                    <FeaturesScreen />
+                    <Pricing />
+                    <Footer />
                   </>
                 }
               />
