@@ -59,7 +59,7 @@ function Login() {
         </div>
         <button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded transition duration-300"
+          className="w-full bg-custom-orange hover:bg-custom-orange-dark-20 text-white font-semibold py-2 rounded transition duration-300"
         >
           Login
         </button>
@@ -67,7 +67,7 @@ function Login() {
 
       <p className="mt-4 text-center">
         Don't have an account?{" "}
-        <Link to="/register" className="text-blue-500 hover:underline">
+        <Link to="/register" className="text-yellow-500 hover:underline">
           Register here
         </Link>
       </p>

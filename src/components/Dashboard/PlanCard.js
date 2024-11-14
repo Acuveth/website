@@ -1,4 +1,3 @@
-// PlanCard.js
 import React from "react";
 
 function PlanCard({ plan, billingCycle, isSubscribed }) {
@@ -6,28 +5,30 @@ function PlanCard({ plan, billingCycle, isSubscribed }) {
   const isDisabled = isSubscribed && billingCycle === "enkratno";
 
   return (
-    <div className="bg-gray-900 rounded-xl shadow-lg p-8 text-center transform transition-transform hover:scale-105">
-      <h3 className="text-xl font-semibold text-white mb-2">{plan.name}</h3>
-      <p className="text-3xl font-extrabold text-purple-400 mb-4">
-        {plan.price} ETH
-        <span className="block text-sm text-gray-400 mt-1">
-          / {billingCycle === "mesečno" ? "month" : "year"}
-        </span>
-      </p>
-      <ul className="text-left text-gray-300 mb-6 space-y-2">
-        {plan.features.map((feature, i) => (
-          <li key={i} className="flex items-center space-x-2">
-            <span className="text-green-500">✓</span>
-            <span>{feature}</span>
-          </li>
-        ))}
-      </ul>
+    <div className="py-12 px-4 border hover:border-custom-orange rounded-lg bg-gray-800 text-white text-center transition-transform transform hover:scale-105 flex flex-col justify-between">
+      <div>
+        <h3 className="text-xl font-semibold mb-4">{plan.name}</h3>
+        <div className="flex justify-center items-baseline mb-4">
+          <span className="text-4xl font-bold text-white">{plan.price}€</span>
+          <span className="text-lg text-gray-400"> / mesec</span>
+        </div>
+
+        <ul className="mb-6 space-y-6 text-gray-300 text-left">
+          {plan.features.map((feature, i) => (
+            <li key={i} className="flex items-center space-x-2">
+              <span className="text-green-500">✔</span>
+              <span>{feature}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
       <button
         onClick={() => !isDisabled && alert(`Subscribed to ${plan.name}`)}
-        className={`w-full py-3 rounded-lg font-semibold transition-colors duration-300 ${
+        className={`w-full py-3 rounded-md font-semibold transition-colors duration-300 ${
           isDisabled
             ? "bg-gray-500 cursor-not-allowed"
-            : "bg-purple-600 hover:bg-purple-700 text-white"
+            : "bg-custom-orange hover:bg-custom-orange-dark-20 text-white"
         }`}
         disabled={isDisabled}
       >

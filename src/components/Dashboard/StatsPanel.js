@@ -23,11 +23,18 @@ function StatsPanel({ selectedEvent, isSubscribed, posts }) {
         // Display global stats
         <div>
           <p>
-            <strong>Tip Naročnine:</strong>{" "}
-            {isSubscribed ? "Subscribed" : "Not Subscribed"}
+            <div className="flex flex-row">
+              <strong>Tip Naročnine:</strong>{" "}
+              <div className="italic ml-2">
+                {isSubscribed ? "Subscribed" : "Not Subscribed"}
+              </div>
+            </div>
           </p>
           <p>
-            <strong>Število promocij:</strong> {posts.length}
+            <div className="flex flex-row">
+              <strong>Število promocij:</strong>
+              <div className="italic ml-2">{posts.length}</div>
+            </div>
           </p>
         </div>
       )}
