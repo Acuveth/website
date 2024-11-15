@@ -4,12 +4,15 @@ import { UserContext } from "../Context/UserContext"; // Import the context
 import NavbarLogedin from "./NavbarLogedin";
 import { db } from "../firebase"; // Import Firestore instance
 import { doc, getDoc, setDoc } from "firebase/firestore"; // Firestore functions
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Firebase Storage functions
 
 const Settings = () => {
   const navigate = useNavigate(); // Use navigate for redirection
   const { user, logout } = useContext(UserContext); // Access the user and logout method from UserContext
   const [userData, setUserData] = useState(null); // Store user data
   const [isEditing, setIsEditing] = useState(false); // Track edit state
+  const [uploading, setUploading] = useState(false); // Track upload state
+  const fileInputRef = React.createRef(); // Create a ref for the file input
 
   // Fetch user data from Firestore
   useEffect(() => {
@@ -39,12 +42,48 @@ const Settings = () => {
       if (user) {
         const docRef = doc(db, "users", user.uid);
         await setDoc(docRef, userData || {}, { merge: true }); // Save or merge data
-        alert("Profile updated successfully!");
+
         setIsEditing(false); // Exit edit mode
       }
     } catch (error) {
       console.error("Error saving user data:", error);
       alert("Failed to save data. Please try again.");
+    }
+  };
+
+  // Handle file upload
+  const handleFileUpload = async (file) => {
+    if (!file) {
+      alert("Please select a file to upload.");
+      return;
+    }
+
+    try {
+      setUploading(true);
+      const storage = getStorage();
+      const fileRef = ref(storage, `profilePictures/${user.uid}_${file.name}`);
+      await uploadBytes(fileRef, file);
+
+      const fileURL = await getDownloadURL(fileRef);
+      setUserData((prevData) => ({ ...prevData, profilePicture: fileURL }));
+
+      // Save profile picture URL to Firestore
+      const docRef = doc(db, "users", user.uid);
+      await setDoc(docRef, { profilePicture: fileURL }, { merge: true });
+
+      alert("Profile picture updated successfully!");
+    } catch (error) {
+      console.error("Error uploading profile picture:", error);
+      alert("Failed to upload profile picture. Please try again.");
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      handleFileUpload(file);
     }
   };
 
@@ -80,10 +119,31 @@ const Settings = () => {
           <div className="bg-gray-900 p-6 rounded-lg shadow-md">
             {/* Profile Picture */}
             <div className="flex items-center mb-6">
-              <div className="w-24 h-24 rounded-full bg-gray-500 mr-6"></div>
-              <button className="border border-gray-500 rounded-lg px-4 py-2 text-gray-300 hover:bg-gray-600">
-                Upload
-              </button>
+              <div
+                className="w-24 h-24 rounded-full bg-gray-500 mr-6"
+                style={{
+                  backgroundImage: `url(${userData?.profilePicture || ""})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              ></div>
+              {isEditing && (
+                <div className="flex flex-col">
+                  <button
+                    onClick={() => fileInputRef.current.click()}
+                    className="border border-gray-500 rounded-lg px-4 py-2 text-gray-300 hover:bg-gray-600"
+                    disabled={uploading}
+                  >
+                    {uploading ? "Uploading..." : "Upload"}
+                  </button>
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    style={{ display: "none" }}
+                    onChange={handleFileChange}
+                  />
+                </div>
+              )}
             </div>
 
             {/* Account Information */}
@@ -102,7 +162,7 @@ const Settings = () => {
                       onChange={(e) =>
                         setUserData({ ...userData, name: e.target.value })
                       }
-                      className="w-full bg-gray-800 border border-gray-600 rounded text-white p-2"
+                      className="w-full bg-gray-900 border-b border-gray-300 text-white p-2"
                     />
                   )}
                 </div>
@@ -129,7 +189,7 @@ const Settings = () => {
                       onChange={(e) =>
                         setUserData({ ...userData, phone: e.target.value })
                       }
-                      className="w-full bg-gray-800 border border-gray-600 rounded text-white p-2"
+                      className="w-full bg-gray-900 border-b border-gray-300 text-white p-2"
                     />
                   )}
                 </div>

@@ -10,18 +10,15 @@ function StatsPanel({ selectedEvent, isSubscribed, posts }) {
             // Display objave-specific details
             <div className="flex flex-col space-y-2">
               <div className="flex flex-col">
-                <strong>Media:</strong>{" "}
+                <strong>Media:</strong>
                 {selectedEvent.media ? (
-                  <a
-                    href={selectedEvent.media}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-custom-orange underline"
-                  >
-                    View Media
-                  </a>
+                  <img
+                    src={selectedEvent.media}
+                    alt="Media"
+                    className="w-24 h-24 rounded-lg object-cover mt-2"
+                  />
                 ) : (
-                  "No Media"
+                  <span className="text-gray-400">No Media</span>
                 )}
               </div>
               <div className="flex flex-col">
@@ -41,18 +38,15 @@ function StatsPanel({ selectedEvent, isSubscribed, posts }) {
             // Display stories-specific details
             <div className="flex flex-col space-y-2">
               <div className="flex flex-col">
-                <strong>Media:</strong>{" "}
+                <strong>Media:</strong>
                 {selectedEvent.media ? (
-                  <a
-                    href={selectedEvent.media}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-custom-orange underline"
-                  >
-                    View Media
-                  </a>
+                  <img
+                    src={selectedEvent.media}
+                    alt="Media"
+                    className="w-24 h-24 rounded-lg object-cover mt-2"
+                  />
                 ) : (
-                  "No Media"
+                  <span className="text-gray-400">No Media</span>
                 )}
               </div>
               <div className="flex flex-col">
@@ -77,18 +71,15 @@ function StatsPanel({ selectedEvent, isSubscribed, posts }) {
             // Display promoters-specific details
             <div className="flex flex-col space-y-2">
               <div className="flex flex-col">
-                <strong>Media:</strong>{" "}
+                <strong>Media:</strong>
                 {selectedEvent.media ? (
-                  <a
-                    href={selectedEvent.media}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-custom-orange underline"
-                  >
-                    View Media
-                  </a>
+                  <img
+                    src={selectedEvent.media}
+                    alt="Media"
+                    className="w-24 h-24 rounded-lg object-cover mt-2"
+                  />
                 ) : (
-                  "No Media"
+                  <span className="text-gray-400">No Media</span>
                 )}
               </div>
               <div className="flex flex-col">

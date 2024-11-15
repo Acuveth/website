@@ -126,11 +126,11 @@ const DetailedFormPage = () => {
                 Link do kart
               </label>
               <input
-                type="text"
+                type="url"
                 name="ticketLink"
                 value={formData.ticketLink}
                 onChange={handleInputChange}
-                placeholder="Enter text"
+                placeholder="https://"
                 className="w-full px-4 py-2 border border-gray-300 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-custom-orange"
               />
             </div>

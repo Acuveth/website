@@ -44,7 +44,10 @@ function EventList({ groupedPosts = {}, onEventSelect }) {
                     </div>
                   ) : (
                     <div className="text-sm font-thin">
-                      {post.description || "No Description"}
+                      {post.description
+                        ? post.description.slice(0, 150) +
+                          (post.description.length > 150 ? "..." : "")
+                        : "No Description"}
                     </div>
                   )}
                 </li>

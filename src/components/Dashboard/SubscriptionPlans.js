@@ -15,6 +15,7 @@ function SubscriptionPlans({ isSubscribed }) {
         "Napredna analitika promocij",
         "Prednostna podpora za stranke",
       ],
+      priceId: "basicPlanID",
     },
     {
       name: "Napredni paket",
@@ -25,6 +26,7 @@ function SubscriptionPlans({ isSubscribed }) {
         "Napredna analitika promocij",
         "Razširjena podpora za stranke",
       ],
+      priceId: "advancedPlanID",
     },
     {
       name: "Premium paket",
@@ -37,6 +39,7 @@ function SubscriptionPlans({ isSubscribed }) {
         "Napredna analitika promocij",
         "Popolna podpora za stranke",
       ],
+      priceId: "premiumPlanID",
     },
   ];
 
