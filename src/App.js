@@ -28,6 +28,10 @@ import FormWIR from "./components/Forms/FormWIR";
 import PromotorjiObjava from "./components/Forms/PromotorjiObjava";
 
 function App() {
+  //Dodat da shranjuje slike
+  //Integrirat stripe in spremenit subscription type experience based on bought subscription
+  //Dodat vse slike, partnerje in napisat vse do konca
+
   return (
     <UserProvider>
       {/* Ensure UserProvider wraps everything */}
@@ -55,7 +59,6 @@ function App() {
                 path="/login"
                 element={
                   <>
-                    <Navbar />
                     <Login />
                   </>
                 }
@@ -65,7 +68,6 @@ function App() {
                 path="/register"
                 element={
                   <>
-                    <Navbar />
                     <Register />
                   </>
                 }
