@@ -1,9 +1,9 @@
-// FormObjava.js
 import React, { useState } from "react";
 import NavbarLogedin from "../NavbarLogedin";
 import { db } from "../../firebase"; // Import Firestore instance
 import { collection, addDoc } from "firebase/firestore"; // Import Firestore functions
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Import Firebase Storage functions
+import { getAuth } from "firebase/auth"; // Import Firebase Authentication
 
 function FormObjava() {
   const [description, setDescription] = useState("");
@@ -18,16 +18,25 @@ function FormObjava() {
     e.preventDefault();
 
     try {
+      const auth = getAuth();
+      const currentUser = auth.currentUser;
+
+      if (!currentUser) {
+        alert("You must be logged in to submit this form.");
+        return;
+      }
+
       let fileURL = null;
       if (file) {
         // Upload file to Firebase Storage
-        const fileRef = ref(storage, `uploads/${file.name}`);
+        const fileRef = ref(storage, `uploads/${Date.now()}_${file.name}`);
         await uploadBytes(fileRef, file);
         fileURL = await getDownloadURL(fileRef);
       }
 
       // Add form data to Firestore collection "objave"
       await addDoc(collection(db, "objave"), {
+        userId: currentUser.uid, // Add the user ID
         description,
         location,
         tags: tags.split(",").map((tag) => tag.trim()), // Convert comma-separated tags to array
@@ -84,7 +93,7 @@ function FormObjava() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Enter description"
-              className="w-full p-2 border border-gray-300 rounded bg-gray-800 text-white"
+              className="w-full p-2 border border-gray-300 rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-custom-orange"
               rows="3"
             ></textarea>
           </div>
@@ -97,7 +106,7 @@ function FormObjava() {
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="Enter location"
-              className="w-full p-2 border border-gray-300 rounded bg-gray-800 text-white"
+              className="w-full p-2 border border-gray-300 rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-custom-orange"
             />
           </div>
 
@@ -109,7 +118,7 @@ function FormObjava() {
               value={tags}
               onChange={(e) => setTags(e.target.value)}
               placeholder="Enter tags (comma separated)"
-              className="w-full p-2 border border-gray-300 rounded bg-gray-800 text-white"
+              className="w-full p-2 border border-gray-300 rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-custom-orange"
             />
           </div>
 

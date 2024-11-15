@@ -20,6 +20,7 @@ import Features from "./LandingPage/Features";
 import Pricing from "./LandingPage/Pricing";
 import LandingPage from "./LandingPage/LandingPage";
 import Partners from "./LandingPage/Partners";
+import ContactForm from "./LandingPage/ContactForm";
 // Import the form components
 import FormObjava from "./components/Forms/FormObjava";
 import FormStory from "./components/Forms/FormStory";
@@ -42,9 +43,10 @@ function App() {
                     <Navbar />
                     <LandingPage />
                     <Partners />
-                    <Features />
+                    <Features id="onas" />
                     <FeaturesScreen />
-                    <Pricing />
+                    <Pricing id="narocnine" />
+                    <ContactForm id="kontakt" />
                     <Footer />
                   </>
                 }

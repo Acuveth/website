@@ -34,7 +34,7 @@ function Login() {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-gray-800 p-8 rounded-lg shadow-lg">
+    <div className="max-w-md mx-auto bg-gray-800 p-8 rounded-lg shadow-lg justify-center items-center">
       <h1 className="text-3xl font-bold mb-6 text-center">Login</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">

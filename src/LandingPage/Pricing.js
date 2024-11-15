@@ -1,6 +1,6 @@
 import React from "react";
 
-const Pricing = () => {
+const Pricing = ({ id }) => {
   const plans = [
     {
       name: "Osnovni paket",
@@ -39,25 +39,28 @@ const Pricing = () => {
   ];
 
   return (
-    <div className="py-16 px-8 bg-gray-900 text-center">
+    <div id={id} className="py-16 px-8 bg-gray-900 text-center">
       {/* Header Section */}
       <h2 className="text-3xl font-bold mb-4 text-white">Naročnine</h2>
       <p className="text-gray-400 mb-12">Izberi paket in doseži tisoče ljudi</p>
 
       {/* Pricing Cards */}
-      <div className="mx-36 grid gap-12 md:grid-cols-3">
+      <div className="mx-48 grid gap-12 md:grid-cols-3">
         {plans.map((plan, index) => (
           <div
             key={index}
             className="flex flex-col justify-between py-12 px-4 border hover:border-custom-orange rounded-lg bg-gray-800 text-white"
           >
             <div>
-              <h3 className="text-xl font-semibold mb-4">{plan.name}</h3>
+              <h3 className="text-2xl font-semibold mb-4">{plan.name}</h3>
               <div className="flex justify-center items-baseline mb-4">
-                <span className="text-4xl font-bold">{plan.price}</span>
-                <span className="text-lg">{plan.frequency}</span>
+                <span className="text-4xl font-bold text-custom-orange">
+                  {plan.price}{" "}
+                </span>
+                <span className="text-lg ml-1"> {plan.frequency}</span>
               </div>
-
+            </div>
+            <div>
               <ul className="mb-6 space-y-6">
                 {plan.features.map((feature, i) => (
                   <li

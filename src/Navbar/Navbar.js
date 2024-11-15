@@ -2,6 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { Link as ScrollLink } from "react-scroll";
 
 const Navbar = () => {
   return (
@@ -19,24 +20,30 @@ const Navbar = () => {
           </Link>
           {/* Links */}
           <div className="hidden md:flex space-x-16 mr-6">
-            <a
-              href="#onas"
-              className="text-gray-200 hover:text-custom-orange font-semibold text-lg"
+            <ScrollLink
+              to="onas"
+              smooth={true}
+              duration={500}
+              className="text-gray-200 hover:text-custom-orange font-semibold text-lg cursor-pointer"
             >
               O nas
-            </a>
-            <a
-              href="#narocnine"
-              className="text-gray-200 hover:text-custom-orange font-semibold text-lg"
+            </ScrollLink>
+            <ScrollLink
+              to="narocnine"
+              smooth={true}
+              duration={500}
+              className="text-gray-200 hover:text-custom-orange font-semibold text-lg cursor-pointer"
             >
               Naročnine
-            </a>
-            <a
-              href="#kontakt"
-              className="text-gray-200 hover:text-custom-orange font-semibold text-lg"
+            </ScrollLink>
+            <ScrollLink
+              to="kontakt"
+              smooth={true}
+              duration={500}
+              className="text-gray-200 hover:text-custom-orange font-semibold text-lg cursor-pointer"
             >
               Kontakt
-            </a>
+            </ScrollLink>
           </div>
         </div>
 
