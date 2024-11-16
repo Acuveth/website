@@ -3,7 +3,15 @@ import { useNavigate } from "react-router-dom";
 import EventList from "./EventList";
 import StatsPanel from "./StatsPanel";
 import { db } from "../../firebase";
-import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  orderBy,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 function UserDashboard() {
@@ -49,12 +57,28 @@ function UserDashboard() {
     }, {});
   };
 
+  const fetchSubscriptionStatus = async (userId) => {
+    try {
+      const userRef = doc(db, "users", userId);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        setIsSubscribed(userData.isSubscribed && userData.isSubscribed !== 0);
+      } else {
+        console.error("User data not found!");
+      }
+    } catch (error) {
+      console.error("Error fetching subscription status:", error);
+    }
+  };
+
   useEffect(() => {
     const auth = getAuth();
     const currentUser = auth.currentUser;
 
     if (currentUser) {
       setCurrentUserId(currentUser.uid);
+      fetchSubscriptionStatus(currentUser.uid);
     }
   }, []);
 
@@ -66,9 +90,7 @@ function UserDashboard() {
 
         // Group posts by date
         const grouped = groupPostsByDate(userPosts);
-
         setGroupedPosts(grouped);
-        console.log("IN PARTENT " + groupedPosts);
       }
     };
 

@@ -93,7 +93,7 @@ const ContactForm = ({ id }) => {
           </p>
         </div>
         {/* Contact Form Column */}
-        <div className=" px-10 py-8 rounded-md shadow-md p-6">
+        <div className=" px-10 py-8 rounded-md shadow-2xl p-6">
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="name" className="block text-sm font-medium mb-1">
@@ -154,7 +154,7 @@ const ContactForm = ({ id }) => {
             <div className="flex justify-center">
               <button
                 type="submit"
-                className="bg-custom-orange text-white font-semibold py-2 px-4 rounded hover:bg-orange-600 transition items-center justify-center"
+                className="bg-custom-orange text-white font-semibold py-2 px-4 rounded hover:bg-orange-600 transition items-center justify-center w-full"
               >
                 Pošlji
               </button>

@@ -9,28 +9,30 @@ function SubscriptionPlans({ isSubscribed }) {
   const monthlyPlans = [
     {
       name: "Osnovni paket",
-      price: 50,
+      price: 30,
       features: [
         "Neomejeno objav in zgodb",
         "Napredna analitika promocij",
         "Prednostna podpora za stranke",
       ],
-      priceId: "basicPlanID",
+      productId: "prod_RDzO4pZbNU2lzK",
+      priceId: "price_1QLXPLJHLDPnt1PV3cQTCkVr", // Replace with actual Price ID
     },
     {
       name: "Napredni paket",
-      price: 75,
+      price: 40,
       features: [
         "Neomejeno objav in zgodb",
         "Promocija s promotorji",
         "Napredna analitika promocij",
         "Razširjena podpora za stranke",
       ],
-      priceId: "advancedPlanID",
+      productId: "prod_RDzO0Z1eXjQzcD",
+      priceId: "price_1QLXPZJHLDPnt1PVecETfyB9", // Replace with actual Price ID
     },
     {
       name: "Premium paket",
-      price: 150,
+      price: 50,
       features: [
         "Neomejeno objav in zgodb",
         "Promocija s promotorji",
@@ -39,7 +41,8 @@ function SubscriptionPlans({ isSubscribed }) {
         "Napredna analitika promocij",
         "Popolna podpora za stranke",
       ],
-      priceId: "premiumPlanID",
+      productId: "prod_RDzOrgDbOvGOWy",
+      priceId: "price_1QLXPnJHLDPnt1PVJJktNvWi", // Replace with actual Price ID
     },
   ];
 

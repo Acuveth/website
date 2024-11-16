@@ -13,7 +13,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyCDCro8yXOWzR_-CgGzVleN-LecyBCo-ng",
   authDomain: "studentski-dogodki.firebaseapp.com",
   projectId: "studentski-dogodki",
-  storageBucket: "studentski-dogodki.appspot.com",
+  storageBucket: "studentski-dogodki.firebasestorage.app",
   messagingSenderId: "835239593044",
   appId: "1:835239593044:web:55ac138ac63d773232d9c1",
   measurementId: "G-VVD04WRBKT",

@@ -1,15 +1,21 @@
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 import { UserContext } from "../Context/UserContext";
 import { auth } from "../firebase"; // Import Firebase auth
 import { IoArrowBack } from "react-icons/io5"; // Import a back arrow icon
+import googleLogo from "../assets/google.png";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
+  const provider = new GoogleAuthProvider(); // Initialize Google provider
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,6 +37,24 @@ function Login() {
     } catch (error) {
       console.error("Login failed:", error);
       alert(error.message || "Login failed");
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      // Sign in with Google Authentication
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      // Save user data to context and local storage
+      setUser(user);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      // Navigate to the dashboard after successful login
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Google Login failed:", error);
+      alert(error.message || "Google Login failed");
     }
   };
 
@@ -69,11 +93,20 @@ function Login() {
             </div>
             <button
               type="submit"
-              className="w-full bg-custom-orange hover:bg-custom-orange-dark-20 text-white font-semibold py-2 rounded transition duration-300"
+              className="w-full bg-custom-orange hover:bg-custom-orange-dark-20 text-white font-semibold py-2 rounded transition duration-300 mb-4"
             >
               Login
             </button>
           </form>
+
+          {/* Google Login Button */}
+          <button
+            onClick={handleGoogleLogin}
+            className="w-full flex items-center justify-center bg-white text-gray-800 font-semibold py-2 rounded-lg border border-gray-300 hover:shadow-md transition duration-300 mb-4"
+          >
+            <img src={googleLogo} alt="Google Logo" className="w-5 h-5 mr-2" />
+            Sign in with Google
+          </button>
 
           <p className="mt-4 text-center">
             Don't have an account?{" "}

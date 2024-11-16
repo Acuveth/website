@@ -13,7 +13,6 @@ import Navbar from "./Navbar/Navbar";
 import SubscriptionPlansPage from "./components/SubscriptionPlansPage";
 import Settings from "./components/Settings";
 import { UserProvider } from "./Context/UserContext"; // Only import the provider
-import PromotionForm from "./components/PromotionForm"; // Import PromotionForm
 import FeaturesScreen from "./LandingPage/FeaturesScreen";
 import Footer from "./LandingPage/Footer";
 import Features from "./LandingPage/Features";
@@ -21,6 +20,8 @@ import Pricing from "./LandingPage/Pricing";
 import LandingPage from "./LandingPage/LandingPage";
 import Partners from "./LandingPage/Partners";
 import ContactForm from "./LandingPage/ContactForm";
+import Success from "./components/Dashboard/Success";
+import Cancel from "./components/Dashboard/Cancel";
 // Import the form components
 import FormObjava from "./components/Forms/FormObjava";
 import FormStory from "./components/Forms/FormStory";
@@ -28,10 +29,9 @@ import FormWIR from "./components/Forms/FormWIR";
 import PromotorjiObjava from "./components/Forms/PromotorjiObjava";
 
 function App() {
-  //Dodat da shranjuje slike
-  //Integrirat stripe in spremenit subscription type experience based on bought subscription
   //Dodat vse slike, partnerje in napisat vse do konca
-
+  //Remake frontend - dashboard in naredi responsive website
+  //Setup backend for payment
   return (
     <UserProvider>
       {/* Ensure UserProvider wraps everything */}
@@ -72,8 +72,9 @@ function App() {
                   </>
                 }
               />
+              <Route path="/success" element={<Success />} />
+              <Route path="/cancel" element={<Cancel />} />
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/promotion-form" element={<PromotionForm />} />{" "}
               <Route path="/settings/:userId" element={<Settings />} />
               {/* New Routes for Each Form Component */}
               <Route path="/form-objava" element={<FormObjava />} />

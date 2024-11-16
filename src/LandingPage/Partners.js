@@ -13,18 +13,18 @@ const Partners = () => {
   ];
 
   return (
-    <div className="px-8 bg-gray-900 py-16">
+    <div className="px-8 bg-gray-900 py-16 ">
       {/* Section Title */}
       <h2 className="text-3xl font-bold text-center text-white mb-8">
         Partnerji
       </h2>
 
       {/* Partners Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 justify-items-center">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 justify-items-center ">
         {partners.map((partner, index) => (
           <div
             key={index}
-            className="w-32 h-32 flex items-center justify-center bg-gray-800 rounded-md shadow-md"
+            className="w-32 h-32 flex items-center justify-center bg-gray-800 rounded-md shadow-2xl"
           >
             {/* Placeholder image, replace src with actual partner image URL */}
             <img

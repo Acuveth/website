@@ -1,7 +1,9 @@
 import React from "react";
 import { loadStripe } from "@stripe/stripe-js";
 
-const stripePromise = loadStripe("your-publishable-key-here"); // Replace with your Stripe publishable key
+const stripePromise = loadStripe(
+  "pk_test_51Nbp2BJHLDPnt1PV1VsPqfX5BApggvywtQDVFBTh8wuPZG2ZtVN5LQaCjnnf4AvIdtz3jz1IYeApMMutSBsvT51X00a9BLCkYu"
+); // Replace with your Stripe publishable key
 
 function PlanCard({ plan }) {
   const handleSubscription = async () => {
@@ -16,7 +18,7 @@ function PlanCard({ plan }) {
           },
         ],
         mode: "subscription", // Use 'subscription' for recurring payments
-        successUrl: `${window.location.origin}/success`,
+        successUrl: `${window.location.origin}/success?product=${plan.productId}`,
         cancelUrl: `${window.location.origin}/cancel`,
       });
 

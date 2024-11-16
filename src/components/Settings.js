@@ -89,7 +89,7 @@ const Settings = () => {
 
   const handleLogout = () => {
     logout(); // Clear user session
-    navigate("/login"); // Redirect to login page
+    navigate("/");
   };
 
   if (!user) {
