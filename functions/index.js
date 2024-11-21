@@ -2,51 +2,159 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const stripe = require("stripe")(
   "sk_test_51Nbp2BJHLDPnt1PVLLW3s3dA7PRLv8AAs5ucAcWrstgbvP7K8qEY4RclqMVubCOxJt67LXhF2g70SS6MG56ChXKY00fzroQQUg"
-); // Replace with your Stripe secret key
+); // Replace with your secret key
 
 admin.initializeApp();
+const db = admin.firestore();
 
-exports.createCheckoutSession = functions.https.onRequest(async (req, res) => {
-  try {
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      line_items: [
-        {
-          price_data: {
-            currency: "usd",
-            product_data: {
-              name: "T-shirt",
-            },
-            unit_amount: 2000, // price in cents
-          },
-          quantity: 1,
-        },
-      ],
-      mode: "payment",
-      success_url: `${process.env.DOMAIN}/success`,
-      cancel_url: `${process.env.DOMAIN}/cancel`,
-    });
+// Function to create a Stripe checkout session
+exports.createCheckoutSession = functions.https.onCall(
+  async (data, context) => {
+    const { priceId, successUrl, cancelUrl } = data;
 
-    res.json({ id: session.id });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Server error");
+    if (!context.auth) {
+      throw new functions.https.HttpsError(
+        "unauthenticated",
+        "Authentication required."
+      );
+    }
+
+    const userId = context.auth.uid;
+    const customerId = await getOrCreateCustomer(userId);
+
+    try {
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        mode: "subscription",
+        line_items: [{ price: priceId, quantity: 1 }],
+        customer: customerId,
+        success_url: successUrl,
+        cancel_url: cancelUrl,
+      });
+
+      return { sessionId: session.id };
+    } catch (error) {
+      console.error("Error creating checkout session:", error);
+      throw new functions.https.HttpsError(
+        "internal",
+        "Unable to create session."
+      );
+    }
   }
+);
+
+// Helper function to get or create a Stripe customer
+async function getOrCreateCustomer(userId) {
+  const userDoc = await db.collection("users").doc(userId).get();
+  const userData = userDoc.data();
+
+  if (userData && userData.stripeCustomerId) {
+    return userData.stripeCustomerId;
+  }
+
+  const customer = await stripe.customers.create({
+    metadata: { firebaseUID: userId },
+  });
+
+  await db
+    .collection("users")
+    .doc(userId)
+    .set({ stripeCustomerId: customer.id }, { merge: true });
+
+  return customer.id;
+}
+
+const endpointSecret = "whsec_your_webhook_secret"; // Replace with your secret
+
+exports.handleStripeWebhook = functions.https.onRequest(async (req, res) => {
+  let event;
+
+  try {
+    const signature = req.headers["stripe-signature"];
+    event = stripe.webhooks.constructEvent(
+      req.rawBody,
+      signature,
+      endpointSecret
+    );
+  } catch (error) {
+    console.error("Webhook signature verification failed:", error);
+    return res.status(400).send("Webhook Error");
+  }
+
+  if (
+    event.type === "customer.subscription.updated" ||
+    event.type === "customer.subscription.deleted"
+  ) {
+    const subscription = event.data.object;
+    const customerId = subscription.customer;
+
+    const userSnapshot = await db
+      .collection("users")
+      .where("stripeCustomerId", "==", customerId)
+      .limit(1)
+      .get();
+
+    if (!userSnapshot.empty) {
+      const userDoc = userSnapshot.docs[0];
+      const subscriptionData = {
+        status: subscription.status,
+        current_period_end: subscription.current_period_end,
+        priceId: subscription.items.data[0].price.id,
+      };
+
+      if (event.type === "customer.subscription.deleted") {
+        subscriptionData.status = "canceled";
+      }
+
+      await userDoc.ref.set(
+        { subscription: subscriptionData },
+        { merge: true }
+      );
+    }
+  }
+
+  res.status(200).send("Webhook received.");
 });
 
-// Cancel subscription
-exports.cancelSubscription = functions.https.onRequest(async (req, res) => {
-  const { subscriptionId } = req.body;
+exports.cancelSubscription = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    throw new functions.https.HttpsError(
+      "unauthenticated",
+      "Authentication required."
+    );
+  }
+
+  const { subscriptionId } = data;
 
   if (!subscriptionId) {
-    return res.status(400).send({ error: "Subscription ID is required" });
+    throw new functions.https.HttpsError(
+      "invalid-argument",
+      "Subscription ID is required."
+    );
   }
 
   try {
-    const canceledSubscription = await stripe.subscriptions.del(subscriptionId);
-    res.status(200).json({ success: true, canceledSubscription });
+    const deletedSubscription = await stripe.subscriptions.del(subscriptionId);
+
+    const userId = context.auth.uid;
+    await db
+      .collection("users")
+      .doc(userId)
+      .set(
+        {
+          subscription: {
+            status: "canceled",
+          },
+        },
+        { merge: true }
+      );
+
+    return { success: true, deletedSubscription };
   } catch (error) {
     console.error("Error canceling subscription:", error);
-    res.status(500).send({ error: "Failed to cancel subscription" });
+    throw new functions.https.HttpsError(
+      "internal",
+      "Unable to cancel subscription"
+    );
   }
 });

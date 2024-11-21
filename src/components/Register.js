@@ -35,6 +35,12 @@ function Register() {
         phone,
         isSubscribed: 0, // Default value
         profile_photo: "", // Default empty profile photo
+        stripeCustomerId: null, // Default Stripe customer ID
+        subscription: {
+          status: "inactive", // Default subscription status
+          current_period_end: null, // Default subscription period end
+          priceId: null, // Default subscription price ID
+        },
       });
 
       alert("Registration successful");

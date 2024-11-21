@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
+import { getFunctions, httpsCallable } from "firebase/functions";
 
 const stripePromise = loadStripe(
   "pk_test_51Nbp2BJHLDPnt1PV1VsPqfX5BApggvywtQDVFBTh8wuPZG2ZtVN5LQaCjnnf4AvIdtz3jz1IYeApMMutSBsvT51X00a9BLCkYu"
@@ -8,26 +9,26 @@ const stripePromise = loadStripe(
 function PlanCard({ plan, isSubscribed, currentPlanId }) {
   const handleSubscription = async () => {
     try {
-      const stripe = await stripePromise;
+      const functions = getFunctions();
+      const createCheckoutSession = httpsCallable(
+        functions,
+        "createCheckoutSession"
+      );
 
-      // Redirect to Stripe Checkout for upgrading
-      const { error } = await stripe.redirectToCheckout({
-        lineItems: [
-          {
-            price: plan.priceId,
-            quantity: 1,
-          },
-        ],
-        mode: "subscription",
-        successUrl: `${window.location.origin}/success?product=${plan.productId}`,
-        cancelUrl: `${window.location.origin}/cancel`,
+      const successUrl = `${window.location.origin}/success`;
+      const cancelUrl = `${window.location.origin}/cancel`;
+
+      const { data } = await createCheckoutSession({
+        priceId: plan.priceId,
+        successUrl,
+        cancelUrl,
       });
 
-      if (error) {
-        console.error("Stripe error:", error.message);
-      }
+      const stripe = await loadStripe("pk_test_your_publishable_key"); // Replace with your publishable key
+      await stripe.redirectToCheckout({ sessionId: data.sessionId });
     } catch (error) {
-      console.error("Error redirecting to checkout:", error);
+      console.error("Error creating subscription:", error);
+      alert("Failed to create subscription. Please try again.");
     }
   };
 
