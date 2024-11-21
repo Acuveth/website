@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom"; // To parse query parameters and navigate
-import { doc, updateDoc } from "firebase/firestore";
-import { getAuth, onAuthStateChanged } from "firebase/auth"; // Import onAuthStateChanged
-import { db } from "../../firebase";
+import { doc, updateDoc, getDoc } from "firebase/firestore"; // Import Firestore functions
+import { getAuth, onAuthStateChanged } from "firebase/auth"; // Firebase Auth
+import { db } from "../../firebase"; // Firebase setup
 
 const SuccessPage = () => {
   const [isUpdating, setIsUpdating] = useState(false);
@@ -13,9 +13,9 @@ const SuccessPage = () => {
 
   // Map productId to subscription levels
   const subscriptionLevels = {
-    prod_RDzO4pZbNU2lzK: 1, // Basic Plan
-    prod_RDzO0Z1eXjQzcD: 2, // Advanced Plan
-    prod_RDzOrgDbOvGOWy: 3, // Premium Plan
+    prod_RDzO4pZbNU2lzK: { level: 1, planName: "Basic Plan" }, // Basic Plan
+    prod_RDzO0Z1eXjQzcD: { level: 2, planName: "Advanced Plan" }, // Advanced Plan
+    prod_RDzOrgDbOvGOWy: { level: 3, planName: "Premium Plan" }, // Premium Plan
   };
 
   useEffect(() => {
@@ -27,17 +27,33 @@ const SuccessPage = () => {
         try {
           setIsUpdating(true);
 
-          // Get the subscription level based on productId
-          const isSubscribed = subscriptionLevels[productId] || 0; // Default to 0 if productId is invalid
-          const userRef = doc(db, "users", user.uid); // Use UID of the authenticated user
+          // Get subscription details based on productId
+          const subscription = subscriptionLevels[productId] || {
+            level: 0,
+            planName: "No Plan",
+          };
 
-          // Update the user's subscription status and subscriptionId in Firestore
-          const updateData = { isSubscribed };
+          const userRef = doc(db, "users", user.uid); // Firestore reference for the user
+
+          // Update the user's subscription details in Firestore
+          const updateData = {
+            isSubscribed: subscription.level, // Numeric subscription level
+            plan: subscription.planName, // Plan name
+          };
+
           if (subscriptionId) {
             updateData.subscriptionId = subscriptionId; // Only update if subscriptionId is available
           }
 
-          await updateDoc(userRef, updateData);
+          // Fetch the current user document
+          const userDoc = await getDoc(userRef);
+
+          // Merge new subscription details into the existing user document
+          if (userDoc.exists()) {
+            await updateDoc(userRef, updateData);
+          } else {
+            console.error("User document not found!");
+          }
         } catch (error) {
           console.error("Error updating subscription status:", error);
         } finally {
@@ -58,20 +74,17 @@ const SuccessPage = () => {
 
     // Cleanup listener
     return () => unsubscribe();
-  }, [productId, subscriptionId, navigate]); // Include productId, subscriptionId, and navigate as dependencies
+  }, [productId, subscriptionId, navigate]); // Dependencies
 
   return (
-    <div
-      className="flex items-center justify-center h-screen bg-gray-100 text-center"
-      style={{ textAlign: "center" }}
-    >
+    <div className="flex items-center justify-center h-screen bg-gray-100 text-center">
       {isUpdating ? (
         <h1 className="text-2xl font-semibold text-gray-700">
           Spreminjanje statusa vaše naročnine...
         </h1>
       ) : (
         <h1 className="text-2xl font-semibold text-gray-700">
-          Hvala za nakup paketa! Preusmerjanje na vašo nadzorno ploščo....
+          Hvala za nakup paketa! Preusmerjanje na vašo nadzorno ploščo...
         </h1>
       )}
     </div>

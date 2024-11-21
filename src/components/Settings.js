@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext"; // Import the context
 import { db } from "../firebase"; // Import Firestore instance
 import { doc, getDoc, setDoc } from "firebase/firestore"; // Firestore functions
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Firebase Storage functions
+import axios from "axios";
 
 const Settings = () => {
-  const navigate = useNavigate(); // Use navigate for redirection
   const { user, logout } = useContext(UserContext); // Access the user and logout method from UserContext
   const [userData, setUserData] = useState(null); // Store user data
   const [isEditing, setIsEditing] = useState(false); // Track edit state
   const [uploading, setUploading] = useState(false); // Track upload state
   const [subscription, setSubscription] = useState(null); // Track subscription status
+  const [isCancelling, setIsCancelling] = useState(false);
   const fileInputRef = React.createRef(); // Create a ref for the file input
 
   // Fetch user data from Firestore
@@ -106,24 +106,38 @@ const Settings = () => {
     );
     if (!confirmCancel) return;
 
-    try {
-      // Simulate cancellation logic
-      setSubscription(null); // Update state to reflect cancellation
-      alert("Your subscription has been canceled.");
+    setIsCancelling(true);
 
-      // Update Firestore to remove subscription details
-      const docRef = doc(db, "users", user.uid);
-      await setDoc(
-        docRef,
+    try {
+      // Call the backend API to cancel the subscription
+      const response = await axios.post(
+        "http://localhost:3001/cancel-subscription",
         {
-          subscriptionId: null,
-          plan: null,
-        },
-        { merge: true }
+          subscriptionId: subscription.subscriptionId,
+        }
       );
+
+      if (response.data.success) {
+        alert("Your subscription has been canceled successfully.");
+
+        // Update Firestore to remove subscription details
+        const docRef = doc(db, "users", user.uid);
+        await setDoc(
+          docRef,
+          { subscriptionId: null, plan: null },
+          { merge: true }
+        );
+
+        // Update local state
+        setSubscription(null);
+      } else {
+        alert("Failed to cancel subscription. Please try again.");
+      }
     } catch (error) {
       console.error("Error canceling subscription:", error);
-      alert("Failed to cancel subscription. Please try again.");
+      alert("An error occurred while canceling your subscription.");
+    } finally {
+      setIsCancelling(false);
     }
   };
 
@@ -137,10 +151,10 @@ const Settings = () => {
 
   return (
     <>
-      <div className="flex min-h-screen bg-gray-900 text-white">
+      <div className="flex min-h-screen bg-gray-900 text-white ">
         {/* Settings Content */}
-        <div className="flex-1 px-8">
-          <div className="flex flex-row bg-gray-900 p-6 rounded-lg justify-center items-center">
+        <div className="flex-1 px-8 justify-center items-center">
+          <div className="flex flex-row bg-gray-900 pt-6 pb-6 pr-6 rounded-lg justify-center items-center">
             {/* Profile Picture */}
             <div className="flex flex-col items-center mb-6">
               <div
@@ -202,13 +216,6 @@ const Settings = () => {
                 </div>
               </div>
 
-              <div className="flex justify-between items-center  pb-4">
-                <div>
-                  <h3 className="text-sm text-gray-400">Email</h3>
-                  <p className="text-lg text-white">{user?.email}</p>
-                </div>
-              </div>
-
               <div className="flex justify-between items-center pb-4">
                 <div>
                   <h3 className="text-sm text-gray-400">Phone</h3>
@@ -228,9 +235,15 @@ const Settings = () => {
                   )}
                 </div>
               </div>
+              <div className="flex justify-between items-center  pb-4">
+                <div>
+                  <h3 className="text-sm text-gray-400">Email</h3>
+                  <p className="text-lg text-white">{user?.email}</p>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center my-5">
             {isEditing && (
               <button
                 onClick={saveUserData}
@@ -240,25 +253,30 @@ const Settings = () => {
               </button>
             )}
           </div>
-          <div className="flex justify-between items-center pb-4">
-            <div>
-              <h3 className="text-sm text-gray-400">Subscription</h3>
-              {subscription ? (
-                <>
-                  <p className="text-lg text-white">
-                    Plan: {subscription.plan || "Unknown"}
-                  </p>
-                  <button
-                    onClick={cancelSubscription}
-                    className="mt-2 py-1 px-4 bg-red-600 hover:bg-red-700 text-white font-semibold rounded transition duration-300"
-                  >
-                    Cancel Subscription
-                  </button>
-                </>
-              ) : (
-                <p className="text-lg text-gray-400">No active subscription</p>
-              )}
-            </div>
+          <div className="flex flex-col items-center justify-center w-full bg-gray-900 p-6 rounded-lg text-center">
+            <h2 className="text-xl font-semibold mb-4">Subscription</h2>
+
+            {subscription ? (
+              <div>
+                <p className="text-lg">Plan: {subscription.plan}</p>
+                <p className="text-lg">
+                  Subscription ID: {subscription.subscriptionId}
+                </p>
+                <button
+                  onClick={cancelSubscription}
+                  disabled={isCancelling}
+                  className={`mt-4 px-4 py-2 rounded ${
+                    isCancelling
+                      ? "bg-gray-500 cursor-not-allowed"
+                      : "bg-red-600 hover:bg-red-700"
+                  } text-white`}
+                >
+                  {isCancelling ? "Cancelling..." : "Cancel Subscription"}
+                </button>
+              </div>
+            ) : (
+              <p className="text-gray-400">No active subscription</p>
+            )}
           </div>
         </div>
       </div>

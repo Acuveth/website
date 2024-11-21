@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import NavbarLogedin from "../NavbarLogedin";
 import { db } from "../../firebase"; // Import Firestore instance
 import { collection, addDoc } from "firebase/firestore"; // Firestore functions
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Firebase Storage functions
 import { getAuth } from "firebase/auth"; // Firebase Authentication functions
+import emailjs from "emailjs-com"; // Import EmailJS
 
 const FormStory = () => {
   const [formData, setFormData] = useState({
@@ -22,6 +22,20 @@ const FormStory = () => {
 
   const handleMediaChange = (e) => {
     setFormData({ ...formData, media: e.target.files[0] });
+  };
+
+  const sendEmail = async (data) => {
+    try {
+      await emailjs.send(
+        "your_service_id", // Replace with your EmailJS service ID
+        "your_template_id", // Replace with your EmailJS template ID
+        data,
+        "your_user_id" // Replace with your EmailJS user ID
+      );
+      console.log("Email sent successfully!");
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -60,6 +74,18 @@ const FormStory = () => {
         media: mediaURL,
         createdAt: new Date(), // Timestamp
       });
+
+      // Prepare email data
+      const emailData = {
+        user_email: currentUser.email, // Optional: sender's email
+        description: formData.description,
+        ticketLink: formData.ticketLink,
+        tags: formData.tags,
+        media: mediaURL || "No media uploaded", // Include media URL if available
+      };
+
+      // Send the email
+      await sendEmail(emailData);
 
       alert("Form submitted successfully!");
       setFormData({ media: null, description: "", ticketLink: "", tags: "" });

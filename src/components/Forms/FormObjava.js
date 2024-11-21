@@ -4,11 +4,11 @@ import { collection, addDoc } from "firebase/firestore";
 import {
   getStorage,
   ref,
-  uploadBytes,
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
 import { getAuth } from "firebase/auth";
+import emailjs from "emailjs-com";
 
 function FormObjava() {
   const [description, setDescription] = useState("");
@@ -30,6 +30,24 @@ function FormObjava() {
       return;
     }
     setFile(selectedFile);
+  };
+
+  const sendEmail = (data) => {
+    emailjs
+      .send(
+        "your_service_id", // Replace with your EmailJS service ID
+        "your_template_id", // Replace with your EmailJS template ID
+        data,
+        "your_user_id" // Replace with your EmailJS user ID
+      )
+      .then(
+        (result) => {
+          console.log("Email sent successfully:", result.text);
+        },
+        (error) => {
+          console.error("Error sending email:", error.text);
+        }
+      );
   };
 
   const handleSubmit = async (e) => {
@@ -73,7 +91,7 @@ function FormObjava() {
           async () => {
             fileURL = await getDownloadURL(uploadTask.snapshot.ref);
             // Add form data to Firestore collection "objave"
-            await addDoc(collection(db, "objave"), {
+            const docRef = await addDoc(collection(db, "objave"), {
               userId: currentUser.uid,
               description,
               location,
@@ -82,6 +100,20 @@ function FormObjava() {
               media: fileURL,
               createdAt: new Date(),
             });
+
+            // Prepare email content
+            const emailData = {
+              description,
+              location,
+              tags,
+              collab: collab ? "Yes" : "No",
+              media: fileURL,
+              user_email: currentUser.email, // Add user email if needed
+            };
+
+            // Send the email with form data
+            sendEmail(emailData);
+
             alert("Form Submitted!");
             // Clear the form after submission
             setDescription("");
@@ -94,7 +126,7 @@ function FormObjava() {
         );
       } else {
         // If no file is uploaded, save the form data without media
-        await addDoc(collection(db, "objave"), {
+        const docRef = await addDoc(collection(db, "objave"), {
           userId: currentUser.uid,
           description,
           location,
@@ -103,6 +135,19 @@ function FormObjava() {
           media: null, // No media uploaded
           createdAt: new Date(), // Add timestamp
         });
+
+        // Prepare email content
+        const emailData = {
+          description,
+          location,
+          tags,
+          collab: collab ? "Yes" : "No",
+          media: "No media uploaded",
+          user_email: currentUser.email, // Add user email if needed
+        };
+
+        // Send the email with form data
+        sendEmail(emailData);
 
         alert("Form Submitted and data stored in Firebase!");
         setDescription("");

@@ -47,7 +47,7 @@ function PlanCard({ plan, isSubscribed, currentPlanId }) {
 
   return (
     <div
-      className={`py-12 px-4 border hover:border-custom-orange rounded-lg bg-gray-900 text-white text-center transition-transform transform hover:scale-105 flex flex-col justify-between ${grayOutClass}`}
+      className={`py-12 px-4 border hover:border-custom-orange rounded-3xl bg-gray-900 text-white text-center transition-transform transform hover:scale-105 flex flex-col justify-between ${grayOutClass}`}
     >
       <div>
         <h3 className="text-xl font-semibold mb-4">{plan.name}</h3>
@@ -67,7 +67,7 @@ function PlanCard({ plan, isSubscribed, currentPlanId }) {
 
       <button
         onClick={handleSubscription}
-        className="w-full py-3 rounded-md font-semibold bg-custom-orange hover:bg-custom-orange-dark-20 text-white transition-colors duration-300"
+        className="w-full py-3 rounded-xl font-semibold bg-custom-orange hover:bg-custom-orange-dark-20 text-white transition-colors duration-300"
         disabled={isGrayOut()} // Disable the button for grayed-out plans
       >
         {isGrayOut()

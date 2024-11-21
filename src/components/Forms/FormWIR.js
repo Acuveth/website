@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import NavbarLogedin from "../NavbarLogedin";
 import { db } from "../../firebase"; // Import Firestore instance
 import { collection, addDoc } from "firebase/firestore"; // Import Firestore functions
 import { getAuth } from "firebase/auth"; // Import Firebase Auth
+import emailjs from "emailjs-com"; // Import EmailJS
 
 const FormWIR = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +16,20 @@ const FormWIR = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const sendEmail = async (data) => {
+    try {
+      await emailjs.send(
+        "your_service_id", // Replace with your EmailJS service ID
+        "your_template_id", // Replace with your EmailJS template ID
+        data,
+        "your_user_id" // Replace with your EmailJS user ID
+      );
+      console.log("Email sent successfully!");
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -34,12 +48,23 @@ const FormWIR = () => {
 
       // Save form data to Firestore
       await addDoc(collection(db, "week_in_review"), {
-        userId: currentUser.uid, // Add the user ID
+        userId: currentUser.uid,
         location: formData.location,
         eventName: formData.eventName,
         eventDuration: formData.eventDuration,
         createdAt: new Date(), // Timestamp
       });
+
+      // Prepare email data
+      const emailData = {
+        user_email: currentUser.email, // Optional: sender's email
+        location: formData.location,
+        eventName: formData.eventName,
+        eventDuration: formData.eventDuration,
+      };
+
+      // Send the email
+      await sendEmail(emailData);
 
       alert("Form submitted successfully!");
       setFormData({ location: "", eventName: "", eventDuration: "" });

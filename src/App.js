@@ -10,7 +10,6 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import Navbar from "./Navbar/Navbar";
-import SubscriptionPlansPage from "./components/SubscriptionPlansPage";
 import Settings from "./components/Settings";
 import { UserProvider } from "./Context/UserContext"; // Only import the provider
 import FeaturesScreen from "./LandingPage/FeaturesScreen";
@@ -29,8 +28,8 @@ import FormWIR from "./components/Forms/FormWIR";
 import FormPromotorji from "./components/Forms/FormPromotorji";
 
 function App() {
-  //Dodat vse slike, partnerje in napisat vse do konca
-  //Remake frontend - dashboard in naredi responsive website
+  //Dodat vse slike, partnerje in napisat vse do konca - še popravt landing page
+  //- cancel subscription in naredi responsive website
   //Setup backend for payment
   return (
     <UserProvider>
@@ -63,7 +62,7 @@ function App() {
                   </>
                 }
               />
-              <Route path="/plans" element={<SubscriptionPlansPage />} />
+
               <Route
                 path="/register"
                 element={

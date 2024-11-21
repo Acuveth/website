@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import NavbarLogedin from "../NavbarLogedin";
 import { db } from "../../firebase"; // Import Firestore instance
 import { collection, addDoc } from "firebase/firestore"; // Import Firestore functions
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Import Firebase Storage functions
 import { getAuth } from "firebase/auth"; // Import Firebase Auth
+import emailjs from "emailjs-com"; // Import EmailJS
 
 const FormPromotorji = () => {
   const [formData, setFormData] = useState({
@@ -22,6 +22,20 @@ const FormPromotorji = () => {
 
   const handleMediaChange = (e) => {
     setFormData({ ...formData, media: e.target.files[0] });
+  };
+
+  const sendEmail = async (data) => {
+    try {
+      await emailjs.send(
+        "your_service_id", // Replace with your EmailJS service ID
+        "your_template_id", // Replace with your EmailJS template ID
+        data,
+        "your_user_id" // Replace with your EmailJS user ID
+      );
+      console.log("Email sent successfully!");
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -53,18 +67,30 @@ const FormPromotorji = () => {
 
       // Save form data to Firestore
       await addDoc(collection(db, "promoters"), {
-        userId: currentUser.uid, // Add the user ID
-        description: formData.description, // Correctly use `formData.description`
+        userId: currentUser.uid,
+        description: formData.description,
         ticketLink: formData.ticketLink,
         tags: formData.tags,
         media: mediaURL,
-        createdAt: new Date(), // Timestamp
+        createdAt: new Date(),
       });
+
+      // Prepare email data
+      const emailData = {
+        user_email: currentUser.email, // Optional: sender's email
+        description: formData.description,
+        ticketLink: formData.ticketLink,
+        tags: formData.tags,
+        media: mediaURL || "No media uploaded", // Include media URL if available
+      };
+
+      // Send the email
+      await sendEmail(emailData);
 
       alert("Form submitted successfully!");
       setFormData({
         media: null,
-        description: "", // Reset description
+        description: "",
         ticketLink: "",
         tags: "",
       });

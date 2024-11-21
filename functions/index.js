@@ -1,19 +1,52 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
+const stripe = require("stripe")(
+  "sk_test_51Nbp2BJHLDPnt1PVLLW3s3dA7PRLv8AAs5ucAcWrstgbvP7K8qEY4RclqMVubCOxJt67LXhF2g70SS6MG56ChXKY00fzroQQUg"
+); // Replace with your Stripe secret key
 
-const {onRequest} = require("firebase-functions/v2/https");
-const logger = require("firebase-functions/logger");
+admin.initializeApp();
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
+exports.createCheckoutSession = functions.https.onRequest(async (req, res) => {
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: "T-shirt",
+            },
+            unit_amount: 2000, // price in cents
+          },
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      success_url: `${process.env.DOMAIN}/success`,
+      cancel_url: `${process.env.DOMAIN}/cancel`,
+    });
 
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+    res.json({ id: session.id });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }
+});
+
+// Cancel subscription
+exports.cancelSubscription = functions.https.onRequest(async (req, res) => {
+  const { subscriptionId } = req.body;
+
+  if (!subscriptionId) {
+    return res.status(400).send({ error: "Subscription ID is required" });
+  }
+
+  try {
+    const canceledSubscription = await stripe.subscriptions.del(subscriptionId);
+    res.status(200).json({ success: true, canceledSubscription });
+  } catch (error) {
+    console.error("Error canceling subscription:", error);
+    res.status(500).send({ error: "Failed to cancel subscription" });
+  }
+});
