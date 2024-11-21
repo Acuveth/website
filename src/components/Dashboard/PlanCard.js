@@ -1,23 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 
 const stripePromise = loadStripe(
   "pk_test_51Nbp2BJHLDPnt1PV1VsPqfX5BApggvywtQDVFBTh8wuPZG2ZtVN5LQaCjnnf4AvIdtz3jz1IYeApMMutSBsvT51X00a9BLCkYu"
-); // Replace with your Stripe publishable key
+);
 
-function PlanCard({ plan }) {
+function PlanCard({ plan, isSubscribed, currentPlanId }) {
   const handleSubscription = async () => {
     try {
       const stripe = await stripePromise;
 
+      // Redirect to Stripe Checkout for upgrading
       const { error } = await stripe.redirectToCheckout({
         lineItems: [
           {
-            price: plan.priceId, // Use the specific Price ID for the plan
+            price: plan.priceId,
             quantity: 1,
           },
         ],
-        mode: "subscription", // Use 'subscription' for recurring payments
+        mode: "subscription",
         successUrl: `${window.location.origin}/success?product=${plan.productId}`,
         cancelUrl: `${window.location.origin}/cancel`,
       });
@@ -30,8 +31,24 @@ function PlanCard({ plan }) {
     }
   };
 
+  // Determine if the plan should be grayed out based on the user's subscription status
+  const isGrayOut = () => {
+    if (isSubscribed === 0) return false; // No subscription yet
+    if (isSubscribed && plan.id === isSubscribed) return true; // Current plan is grayed out
+    return false;
+  };
+
+  const isUpgrade = () => {
+    if (isSubscribed && plan.id > isSubscribed) return true; // Determine if this is an upgrade
+    return false;
+  };
+
+  const grayOutClass = isGrayOut() ? "opacity-50 pointer-events-none" : "";
+
   return (
-    <div className="py-12 px-4 border hover:border-custom-orange rounded-lg bg-gray-900 text-white text-center transition-transform transform hover:scale-105 flex flex-col justify-between">
+    <div
+      className={`py-12 px-4 border hover:border-custom-orange rounded-lg bg-gray-900 text-white text-center transition-transform transform hover:scale-105 flex flex-col justify-between ${grayOutClass}`}
+    >
       <div>
         <h3 className="text-xl font-semibold mb-4">{plan.name}</h3>
         <div className="flex justify-center items-baseline mb-4">
@@ -51,8 +68,13 @@ function PlanCard({ plan }) {
       <button
         onClick={handleSubscription}
         className="w-full py-3 rounded-md font-semibold bg-custom-orange hover:bg-custom-orange-dark-20 text-white transition-colors duration-300"
+        disabled={isGrayOut()} // Disable the button for grayed-out plans
       >
-        Subscribe Now
+        {isGrayOut()
+          ? "Current Plan"
+          : isUpgrade()
+          ? "Upgrade Plan"
+          : "Subscribe Now"}
       </button>
     </div>
   );

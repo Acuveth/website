@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import NavbarLogedin from "../NavbarLogedin";
 import { db } from "../../firebase";
 import { collection, addDoc } from "firebase/firestore";
 import {
@@ -120,15 +119,14 @@ function FormObjava() {
 
   return (
     <>
-      <NavbarLogedin />
       <div className="flex justify-center min-h-screen bg-gray-900">
-        <div className="bg-gray-900 p-8 rounded-lg shadow-lg max-w-lg w-full">
+        <div className="bg-gray-900 p-6 rounded-lg shadow-lg max-w-lg w-full">
           <h1 className="text-2xl font-bold mb-6 text-center text-white">
             Naroči Objavo
           </h1>
           <div className="mb-2">
             <label className="block text-white font-semibold mb-2">
-              Naloži sliko/Video
+              Naloži Sliko/Video
             </label>
             <input
               type="file"

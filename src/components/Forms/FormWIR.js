@@ -4,7 +4,7 @@ import { db } from "../../firebase"; // Import Firestore instance
 import { collection, addDoc } from "firebase/firestore"; // Import Firestore functions
 import { getAuth } from "firebase/auth"; // Import Firebase Auth
 
-const ShortFormPage = () => {
+const FormWIR = () => {
   const [formData, setFormData] = useState({
     location: "",
     eventName: "",
@@ -53,11 +53,9 @@ const ShortFormPage = () => {
 
   return (
     <>
-      <NavbarLogedin />
-
       <div className="min-h-screen bg-gray-900 flex flex-col items-center">
         {/* Form Container */}
-        <div className="w-full max-w-sm p-6 bg-gray-900 shadow-md rounded-lg">
+        <div className="max-w-lg w-full p-6 bg-gray-900 shadow-md rounded-lg">
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Short Input Field 1 */}
             <h1 className="text-2xl font-bold mb-6 text-center text-white">
@@ -126,4 +124,4 @@ const ShortFormPage = () => {
   );
 };
 
-export default ShortFormPage;
+export default FormWIR;

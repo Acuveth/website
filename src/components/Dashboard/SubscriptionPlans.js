@@ -1,13 +1,12 @@
-// SubscriptionPlans.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PlanCard from "./PlanCard";
-import BillingCycleToggle from "./BillingCycleToggle";
 
 function SubscriptionPlans({ isSubscribed }) {
   const [billingCycle, setBillingCycle] = useState("mesečno");
 
   const monthlyPlans = [
     {
+      id: 1, // Identifier for plan
       name: "Osnovni paket",
       price: 30,
       features: [
@@ -16,9 +15,10 @@ function SubscriptionPlans({ isSubscribed }) {
         "Prednostna podpora za stranke",
       ],
       productId: "prod_RDzO4pZbNU2lzK",
-      priceId: "price_1QLXPLJHLDPnt1PV3cQTCkVr", // Replace with actual Price ID
+      priceId: "price_1QLXPLJHLDPnt1PV3cQTCkVr",
     },
     {
+      id: 2,
       name: "Napredni paket",
       price: 40,
       features: [
@@ -28,9 +28,10 @@ function SubscriptionPlans({ isSubscribed }) {
         "Razširjena podpora za stranke",
       ],
       productId: "prod_RDzO0Z1eXjQzcD",
-      priceId: "price_1QLXPZJHLDPnt1PVecETfyB9", // Replace with actual Price ID
+      priceId: "price_1QLXPZJHLDPnt1PVecETfyB9",
     },
     {
+      id: 3,
       name: "Premium paket",
       price: 50,
       features: [
@@ -42,17 +43,21 @@ function SubscriptionPlans({ isSubscribed }) {
         "Popolna podpora za stranke",
       ],
       productId: "prod_RDzOrgDbOvGOWy",
-      priceId: "price_1QLXPnJHLDPnt1PVJJktNvWi", // Replace with actual Price ID
+      priceId: "price_1QLXPnJHLDPnt1PVJJktNvWi",
     },
   ];
+
+  useEffect(() => {
+    console.log(isSubscribed);
+  }, []);
 
   return (
     <div className="max-w-7xl mx-auto p-10 text-white">
       <h2 className="text-4xl font-bold text-center mb-8">Naroči se</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {monthlyPlans.map((plan, index) => (
+        {monthlyPlans.map((plan) => (
           <PlanCard
-            key={index}
+            key={plan.id}
             plan={plan}
             billingCycle={billingCycle}
             isSubscribed={isSubscribed}

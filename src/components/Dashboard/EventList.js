@@ -20,7 +20,7 @@ function EventList({ groupedPosts = {}, onEventSelect }) {
   };
 
   return (
-    <div className="bg-gray-800 text-white rounded-lg p-4 h-full overflow-y-auto">
+    <div className="bg-gray-800 text-white rounded-3xl p-4 h-full overflow-y-auto">
       <h2 className="text-xl font-semibold mb-4">TVOJA NAROČILA</h2>
       {Object.keys(groupedPosts).length > 0 ? (
         Object.entries(groupedPosts).map(([date, posts]) => (
@@ -31,7 +31,7 @@ function EventList({ groupedPosts = {}, onEventSelect }) {
                 <li
                   key={post.id}
                   onClick={() => onEventSelect(post)}
-                  className="p-3 bg-gray-700 hover:bg-gray-600 rounded-lg mb-2 cursor-pointer"
+                  className="p-3 pl-6 bg-gray-700 hover:bg-gray-600 rounded-3xl mb-2 cursor-pointer"
                 >
                   <span className="font-semibold">
                     {decodePostType(post.type)}

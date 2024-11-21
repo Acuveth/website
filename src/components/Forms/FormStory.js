@@ -5,7 +5,7 @@ import { collection, addDoc } from "firebase/firestore"; // Firestore functions
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Firebase Storage functions
 import { getAuth } from "firebase/auth"; // Firebase Authentication functions
 
-const FormPage = () => {
+const FormStory = () => {
   const [formData, setFormData] = useState({
     media: null,
     description: "",
@@ -73,11 +73,9 @@ const FormPage = () => {
 
   return (
     <>
-      <NavbarLogedin />
-
       <div className="min-h-screen bg-gray-900 flex flex-col items-center">
         {/* Form Container */}
-        <div className="w-full max-w-md mt-10 p-6 bg-gray-900 shadow-md rounded-lg space-y-4">
+        <div className="max-w-lg w-full p-6 bg-gray-900 shadow-md rounded-lg space-y-4">
           <form onSubmit={handleSubmit} className="space-y-4">
             <h1 className="text-2xl font-bold mb-6 text-center text-white">
               Naroči Story
@@ -86,7 +84,7 @@ const FormPage = () => {
             {/* Media Upload */}
             <div>
               <label className="block text-white font-semibold mb-2">
-                Naloži sliko/Video
+                Naloži Sliko/Video
               </label>
               <input
                 type="file"
@@ -166,4 +164,4 @@ const FormPage = () => {
   );
 };
 
-export default FormPage;
+export default FormStory;

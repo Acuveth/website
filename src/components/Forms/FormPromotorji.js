@@ -5,7 +5,7 @@ import { collection, addDoc } from "firebase/firestore"; // Import Firestore fun
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Import Firebase Storage functions
 import { getAuth } from "firebase/auth"; // Import Firebase Auth
 
-const DetailedFormPage = () => {
+const FormPromotorji = () => {
   const [formData, setFormData] = useState({
     media: null,
     description: "",
@@ -78,11 +78,9 @@ const DetailedFormPage = () => {
 
   return (
     <>
-      <NavbarLogedin />
-
       <div className="min-h-screen bg-gray-900 flex flex-col items-center">
         {/* Form Container */}
-        <div className="w-full max-w-md p-6 bg-gray-900 shadow-md rounded-lg space-y-4">
+        <div className="max-w-lg w-full p-6 bg-gray-900 shadow-md rounded-lg space-y-4">
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Media Upload */}
             <h1 className="text-2xl font-bold mb-6 text-center text-white">
@@ -169,4 +167,4 @@ const DetailedFormPage = () => {
   );
 };
 
-export default DetailedFormPage;
+export default FormPromotorji;

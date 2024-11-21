@@ -1,32 +1,53 @@
-// Dashboard.js
 import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
 import NavbarLogedin from "./NavbarLogedin";
 import { UserContext } from "../Context/UserContext";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import SubscriptionPlans from "./Dashboard/SubscriptionPlans";
 import UserDashboard from "./Dashboard/UserDashboard";
 
 function Dashboard() {
-  const [posts, setPosts] = useState([]);
-  const [isSubscribed, setIsSubscribed] = useState(false);
-  const navigate = useNavigate();
+  const [isSubscribed, setIsSubscribed] = useState(null); // Set to null initially
   const { user } = useContext(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setIsSubscribed(true);
-  }, [user, isSubscribed]);
+    const fetchSubscriptionStatus = async () => {
+      if (!user) return;
+
+      try {
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+          setIsSubscribed(userData.isSubscribed || 0);
+        } else {
+          console.error("User data not found!");
+        }
+      } catch (error) {
+        console.error("Error fetching subscription status:", error);
+      }
+    };
+
+    fetchSubscriptionStatus();
+  }, [user]);
+
+  // Redirect to the "Pregled Planov" tab if the user is not subscribed
+  useEffect(() => {
+    if (isSubscribed === 0) {
+      navigate("/dashboard?tab=plans");
+    }
+  }, [isSubscribed, navigate]);
 
   return (
     <>
       <NavbarLogedin />
-      {isSubscribed ? (
-        <UserDashboard
-          posts={posts}
-          onNewPromotionClick={() => navigate("/promotion-form")}
-        />
+      {isSubscribed === null ? ( // Show a loading state while fetching the subscription status
+        <div className="text-white text-center mt-10">Loading...</div>
       ) : (
-        <SubscriptionPlans isSubscribed={isSubscribed} />
+        <UserDashboard isSubscribed={isSubscribed} />
       )}
     </>
   );

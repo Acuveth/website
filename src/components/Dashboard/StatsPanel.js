@@ -2,43 +2,45 @@ import React from "react";
 
 function StatsPanel({ selectedEvent, isSubscribed, posts }) {
   return (
-    <div className="text-white p-4 rounded-lg">
+    <div className="text-white pr-4">
       {selectedEvent ? (
         // Display selected event's details
-        <div>
+        <div className="bg-gray-800 p-6 rounded-3xl">
           {selectedEvent.type === "objave" ? (
             // Display objave-specific details
             <div className="flex flex-col space-y-2">
-              <div className="flex flex-col">
-                <strong>Media:</strong>
+              <div className="flex flex-col items-center">
                 {selectedEvent.media ? (
                   <img
                     src={selectedEvent.media}
                     alt="Media"
-                    className="w-24 h-24 rounded-lg object-cover mt-2"
+                    className="w-full w-full rounded-xl object-cover"
                   />
                 ) : (
                   <span className="text-gray-400">No Media</span>
                 )}
               </div>
-              <div className="flex flex-col">
-                <strong>Opis:</strong> {selectedEvent.description || "N/A"}
+              <div className="flex">
+                <strong className="mr-2">Opis:</strong>{" "}
+                {selectedEvent.description || "N/A"}
               </div>
-              <div className="flex flex-col">
-                <strong>Lokacija:</strong> {selectedEvent.location || "N/A"}
+              <div className="flex">
+                <strong className="mr-2">Lokacija:</strong>{" "}
+                {selectedEvent.location || "N/A"}
               </div>
-              <div className="flex flex-col">
-                <strong>Collab:</strong> {selectedEvent.collab ? "Yes" : "No"}
+              <div className="flex">
+                <strong className="mr-2">Collab:</strong>{" "}
+                {selectedEvent.collab ? "Yes" : "No"}
               </div>
-              <div className="flex flex-col">
-                <strong>Tags:</strong> {selectedEvent.tags?.join(", ") || "N/A"}
+              <div className="flex">
+                <strong className="mr-2">Tags:</strong>{" "}
+                {selectedEvent.tags?.join(", ") || "N/A"}
               </div>
             </div>
           ) : selectedEvent.type === "stories" ? (
             // Display stories-specific details
             <div className="flex flex-col space-y-2">
               <div className="flex flex-col">
-                <strong>Media:</strong>
                 {selectedEvent.media ? (
                   <img
                     src={selectedEvent.media}
@@ -49,14 +51,16 @@ function StatsPanel({ selectedEvent, isSubscribed, posts }) {
                   <span className="text-gray-400">No Media</span>
                 )}
               </div>
-              <div className="flex flex-col">
-                <strong>Opis:</strong> {selectedEvent.description || "N/A"}
+              <div className="flex ">
+                <strong className="mr-2">Opis:</strong>{" "}
+                {selectedEvent.description || "N/A"}
               </div>
-              <div className="flex flex-col">
-                <strong>Tags:</strong> {selectedEvent.tags?.join(", ") || "N/A"}
+              <div className="flex ">
+                <strong className="mr-2">Tags:</strong>{" "}
+                {selectedEvent.tags?.join(", ") || "N/A"}
               </div>
-              <div className="flex flex-col">
-                <strong>Link do Kart:</strong>{" "}
+              <div className="flex ">
+                <strong className="mr-2">Link do Kart:</strong>{" "}
                 <a
                   href={selectedEvent.ticketLink}
                   target="_blank"
@@ -70,8 +74,7 @@ function StatsPanel({ selectedEvent, isSubscribed, posts }) {
           ) : selectedEvent.type === "promoters" ? (
             // Display promoters-specific details
             <div className="flex flex-col space-y-2">
-              <div className="flex flex-col">
-                <strong>Media:</strong>
+              <div className="flex">
                 {selectedEvent.media ? (
                   <img
                     src={selectedEvent.media}
@@ -82,14 +85,16 @@ function StatsPanel({ selectedEvent, isSubscribed, posts }) {
                   <span className="text-gray-400">No Media</span>
                 )}
               </div>
-              <div className="flex flex-col">
-                <strong>Navodila:</strong> {selectedEvent.instructions || "N/A"}
+              <div className="flex">
+                <strong className="mr-2">Navodila:</strong>{" "}
+                {selectedEvent.instructions || "N/A"}
               </div>
-              <div className="flex flex-col">
-                <strong>Tags:</strong> {selectedEvent.tags || "N/A"}
+              <div className="flex">
+                <strong className="mr-2">Tags:</strong>{" "}
+                {selectedEvent.tags || "N/A"}
               </div>
-              <div className="flex flex-col">
-                <strong>Link do Kart:</strong>{" "}
+              <div className="flex">
+                <strong className="mr-2">Link do Kart:</strong>{" "}
                 <a
                   href={selectedEvent.ticketLink}
                   target="_blank"
@@ -103,33 +108,22 @@ function StatsPanel({ selectedEvent, isSubscribed, posts }) {
           ) : selectedEvent.type === "week_in_review" ? (
             // Display week_in_review-specific details
             <div className="flex flex-col space-y-2">
-              <div className="flex flex-col">
-                <strong>Ime dogodka:</strong> {selectedEvent.eventName || "N/A"}
+              <div className="flex">
+                <strong className="mr-2">Ime dogodka:</strong>{" "}
+                {selectedEvent.eventName || "N/A"}
               </div>
-              <div className="flex flex-col">
-                <strong>Lokacija:</strong> {selectedEvent.location || "N/A"}
+              <div className="flex ">
+                <strong className="mr-2">Lokacija:</strong>{" "}
+                {selectedEvent.location || "N/A"}
               </div>
-              <div className="flex flex-col">
-                <strong>Trajanje dogodka:</strong>{" "}
+              <div className="flex ">
+                <strong className="mr-2">Trajanje dogodka:</strong>{" "}
                 {selectedEvent.eventDuration || "N/A"}
               </div>
             </div>
           ) : (
             // Display generic details for other types
-            <div className="flex flex-col space-y-2">
-              <div className="flex flex-col">
-                <strong>Naslov:</strong> {selectedEvent.title || "N/A"}
-              </div>
-              <div className="flex flex-col">
-                <strong>Opis:</strong> {selectedEvent.description || "N/A"}
-              </div>
-              <div className="flex flex-col">
-                <strong>Datum:</strong> {selectedEvent.date || "N/A"}
-              </div>
-              <div className="flex flex-col">
-                <strong>Lokacija:</strong> {selectedEvent.location || "N/A"}
-              </div>
-            </div>
+            <div className=""></div>
           )}
         </div>
       ) : (

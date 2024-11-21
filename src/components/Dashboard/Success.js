@@ -8,6 +8,7 @@ const SuccessPage = () => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [searchParams] = useSearchParams();
   const productId = searchParams.get("product"); // Get productId from URL
+  const subscriptionId = searchParams.get("subscriptionId"); // Get subscriptionId from URL
   const navigate = useNavigate(); // React Router's navigate hook
 
   // Map productId to subscription levels
@@ -30,8 +31,13 @@ const SuccessPage = () => {
           const isSubscribed = subscriptionLevels[productId] || 0; // Default to 0 if productId is invalid
           const userRef = doc(db, "users", user.uid); // Use UID of the authenticated user
 
-          // Update the user's subscription status in Firestore
-          await updateDoc(userRef, { isSubscribed });
+          // Update the user's subscription status and subscriptionId in Firestore
+          const updateData = { isSubscribed };
+          if (subscriptionId) {
+            updateData.subscriptionId = subscriptionId; // Only update if subscriptionId is available
+          }
+
+          await updateDoc(userRef, updateData);
         } catch (error) {
           console.error("Error updating subscription status:", error);
         } finally {
@@ -52,7 +58,7 @@ const SuccessPage = () => {
 
     // Cleanup listener
     return () => unsubscribe();
-  }, [productId, navigate]); // Include productId and navigate as dependencies
+  }, [productId, subscriptionId, navigate]); // Include productId, subscriptionId, and navigate as dependencies
 
   return (
     <div

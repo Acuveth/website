@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext"; // Import the context
-import NavbarLogedin from "./NavbarLogedin";
 import { db } from "../firebase"; // Import Firestore instance
 import { doc, getDoc, setDoc } from "firebase/firestore"; // Firestore functions
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Firebase Storage functions
@@ -12,6 +11,7 @@ const Settings = () => {
   const [userData, setUserData] = useState(null); // Store user data
   const [isEditing, setIsEditing] = useState(false); // Track edit state
   const [uploading, setUploading] = useState(false); // Track upload state
+  const [subscription, setSubscription] = useState(null); // Track subscription status
   const fileInputRef = React.createRef(); // Create a ref for the file input
 
   // Fetch user data from Firestore
@@ -24,6 +24,13 @@ const Settings = () => {
 
           if (docSnap.exists()) {
             setUserData(docSnap.data());
+
+            if (docSnap.data().subscriptionId) {
+              setSubscription({
+                subscriptionId: docSnap.data().subscriptionId,
+                plan: docSnap.data().plan, // e.g., "Basic Plan"
+              });
+            }
           } else {
             setUserData(null); // No data found
           }
@@ -87,9 +94,37 @@ const Settings = () => {
     }
   };
 
-  const handleLogout = () => {
-    logout(); // Clear user session
-    navigate("/");
+  // Cancel Subscription
+  const cancelSubscription = async () => {
+    if (!subscription || !subscription.subscriptionId) {
+      alert("No active subscription found.");
+      return;
+    }
+
+    const confirmCancel = window.confirm(
+      "Are you sure you want to cancel your subscription? This action cannot be undone."
+    );
+    if (!confirmCancel) return;
+
+    try {
+      // Simulate cancellation logic
+      setSubscription(null); // Update state to reflect cancellation
+      alert("Your subscription has been canceled.");
+
+      // Update Firestore to remove subscription details
+      const docRef = doc(db, "users", user.uid);
+      await setDoc(
+        docRef,
+        {
+          subscriptionId: null,
+          plan: null,
+        },
+        { merge: true }
+      );
+    } catch (error) {
+      console.error("Error canceling subscription:", error);
+      alert("Failed to cancel subscription. Please try again.");
+    }
   };
 
   if (!user) {
@@ -102,25 +137,14 @@ const Settings = () => {
 
   return (
     <>
-      <NavbarLogedin />
       <div className="flex min-h-screen bg-gray-900 text-white">
-        {/* Sidebar */}
-        <aside className="w-1/4 bg-gray-900 p-4 border-r border-gray-700">
-          <h2 className="text-lg font-semibold text-gray-300 mb-4">Settings</h2>
-          <ul>
-            <li className="text-white font-medium p-2 rounded-lg bg-yellow-900">
-              Account
-            </li>
-          </ul>
-        </aside>
-
         {/* Settings Content */}
-        <div className="flex-1 p-8">
-          <div className="bg-gray-900 p-6 rounded-lg shadow-md">
+        <div className="flex-1 px-8">
+          <div className="flex flex-row bg-gray-900 p-6 rounded-lg justify-center items-center">
             {/* Profile Picture */}
-            <div className="flex items-center mb-6">
+            <div className="flex flex-col items-center mb-6">
               <div
-                className="w-24 h-24 rounded-full bg-gray-500 mr-6"
+                className="w-64 h-64 rounded-full bg-gray-500 mr-6"
                 style={{
                   backgroundImage: `url(${userData?.profilePicture || ""})`,
                   backgroundSize: "cover",
@@ -128,7 +152,7 @@ const Settings = () => {
                 }}
               ></div>
               {isEditing && (
-                <div className="flex flex-col">
+                <div className="flex flex-col mt-5">
                   <button
                     onClick={() => fileInputRef.current.click()}
                     className="border border-gray-500 rounded-lg px-4 py-2 text-gray-300 hover:bg-gray-600"
@@ -147,12 +171,11 @@ const Settings = () => {
             </div>
 
             {/* Account Information */}
-            <div className="space-y-4">
-              <div className="flex justify-between items-center border-b border-gray-600 pb-4">
+            <div className="space-y-4 justify-between">
+              <div className="flex flex-row ">
                 <div>
-                  <h3 className="text-sm text-gray-400">Name</h3>
                   {!isEditing ? (
-                    <p className="text-lg text-white">
+                    <p className="text-2xl text-white font-bold ">
                       {userData?.name || "Not set"}
                     </p>
                   ) : (
@@ -162,20 +185,31 @@ const Settings = () => {
                       onChange={(e) =>
                         setUserData({ ...userData, name: e.target.value })
                       }
-                      className="w-full bg-gray-900 border-b border-gray-300 text-white p-2"
+                      className="w-full bg-gray-900 border border-gray-500 text-white p-2 rounded-lg"
                     />
+                  )}
+                </div>
+                {/* Buttons Section */}
+                <div className="flex flex-row justify-end items-center ml-10 mt-0.5 space-x-4">
+                  {!isEditing && (
+                    <button
+                      onClick={() => setIsEditing(!isEditing)}
+                      className="py-1 px-8 bg-gray-700 hover:bg-gray-500 text-white font-semibold py-2 rounded transition duration-300"
+                    >
+                      Edit
+                    </button>
                   )}
                 </div>
               </div>
 
-              <div className="flex justify-between items-center border-b border-gray-600 pb-4">
+              <div className="flex justify-between items-center  pb-4">
                 <div>
                   <h3 className="text-sm text-gray-400">Email</h3>
                   <p className="text-lg text-white">{user?.email}</p>
                 </div>
               </div>
 
-              <div className="flex justify-between items-center border-b border-gray-600 pb-4">
+              <div className="flex justify-between items-center pb-4">
                 <div>
                   <h3 className="text-sm text-gray-400">Phone</h3>
                   {!isEditing ? (
@@ -189,39 +223,42 @@ const Settings = () => {
                       onChange={(e) =>
                         setUserData({ ...userData, phone: e.target.value })
                       }
-                      className="w-full bg-gray-900 border-b border-gray-300 text-white p-2"
+                      className="w-full bg-gray-900 border border-gray-500 text-white p-2 rounded-lg"
                     />
                   )}
                 </div>
               </div>
             </div>
           </div>
-
-          {/* Buttons Section */}
-          <div className="flex flex-row justify-end items-center mt-6 mr-4 space-x-4">
+          <div className="flex justify-center items-center">
             {isEditing && (
               <button
                 onClick={saveUserData}
-                className="py-2 px-4 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded transition duration-300"
+                className="py-1 px-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded transition duration-300 "
               >
                 Save Changes
               </button>
             )}
-            {!isEditing && (
-              <button
-                onClick={() => setIsEditing(!isEditing)}
-                className="py-2 px-4 bg-gray-900 hover:bg-gray-700 text-custom-orange font-semibold py-2 rounded transition duration-300"
-              >
-                Edit
-              </button>
-            )}
-
-            <button
-              onClick={handleLogout}
-              className="py-2 px-4 bg-custom-orange hover:bg-custom-orange-dark-10 text-white font-semibold py-2 rounded transition duration-300"
-            >
-              Logout
-            </button>
+          </div>
+          <div className="flex justify-between items-center pb-4">
+            <div>
+              <h3 className="text-sm text-gray-400">Subscription</h3>
+              {subscription ? (
+                <>
+                  <p className="text-lg text-white">
+                    Plan: {subscription.plan || "Unknown"}
+                  </p>
+                  <button
+                    onClick={cancelSubscription}
+                    className="mt-2 py-1 px-4 bg-red-600 hover:bg-red-700 text-white font-semibold rounded transition duration-300"
+                  >
+                    Cancel Subscription
+                  </button>
+                </>
+              ) : (
+                <p className="text-lg text-gray-400">No active subscription</p>
+              )}
+            </div>
           </div>
         </div>
       </div>

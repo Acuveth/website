@@ -26,7 +26,7 @@ import Cancel from "./components/Dashboard/Cancel";
 import FormObjava from "./components/Forms/FormObjava";
 import FormStory from "./components/Forms/FormStory";
 import FormWIR from "./components/Forms/FormWIR";
-import PromotorjiObjava from "./components/Forms/PromotorjiObjava";
+import FormPromotorji from "./components/Forms/FormPromotorji";
 
 function App() {
   //Dodat vse slike, partnerje in napisat vse do konca
@@ -80,7 +80,7 @@ function App() {
               <Route path="/form-objava" element={<FormObjava />} />
               <Route path="/form-story" element={<FormStory />} />
               <Route path="/form-wir" element={<FormWIR />} />
-              <Route path="/promotorji-objava" element={<PromotorjiObjava />} />
+              <Route path="/promotorji-objava" element={<FormPromotorji />} />
             </Routes>
           </div>
         </div>
