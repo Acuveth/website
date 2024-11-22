@@ -56,7 +56,7 @@ function EventList({ groupedPosts = {}, onEventSelect }) {
           </div>
         ))
       ) : (
-        <p>No posts available.</p>
+        <p>Nisi kupil še nobene promocije.</p>
       )}
     </div>
   );

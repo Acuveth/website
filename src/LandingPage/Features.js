@@ -26,7 +26,7 @@ const features = [
 
 const Features = ({ id }) => {
   return (
-    <div id={id} className="px-8 space-y-16 bg-gray-900 py-16">
+    <div id={id} className="px-6 lg:px-16 space-y-16 bg-gray-900 py-16">
       {features.map((feature, index) => (
         <div
           key={index}
@@ -34,16 +34,16 @@ const Features = ({ id }) => {
             index % 2 === 0 ? "" : "md:flex-row-reverse"
           }`}
         >
-          {/* Image */}
-          <div className="w-full md:w-1/2">
+          {/* Image Section */}
+          <div className="w-full md:w-1/2 flex justify-center">
             <img
               src={feature.image}
               alt={feature.title}
-              className="w-full h-auto rounded-md shadow-md"
+              className="w-full max-w-md h-auto rounded-md shadow-md"
             />
           </div>
 
-          {/* Text */}
+          {/* Text Section */}
           <div className="w-full md:w-1/2 md:px-8 mt-4 md:mt-0 text-center md:text-left">
             <h3 className="text-2xl font-bold text-white mb-4">
               {feature.title}

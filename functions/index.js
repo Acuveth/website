@@ -1,13 +1,21 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const stripe = require("stripe")(
-  "sk_test_51Nbp2BJHLDPnt1PVLLW3s3dA7PRLv8AAs5ucAcWrstgbvP7K8qEY4RclqMVubCOxJt67LXhF2g70SS6MG56ChXKY00fzroQQUg"
-); // Replace with your secret key
+  "sk_test_51Nbp2BJHLDPnt1PVLLW3s3dA7PRLv8AAs5ucAcWrstgbvP7K8qEY4RclqMVubCOxJt67LXhF2g70SS6MG56ChXKY00fzroQQUg" // Replace with your secret key
+);
 
 admin.initializeApp();
 const db = admin.firestore();
 
-// Function to create a Stripe checkout session
+/**
+ * Creates a Stripe checkout session for subscription management.
+ * @param {Object} data - Data sent from the frontend.
+ * @param {string} data.priceId - Stripe Price ID for the subscription.
+ * @param {string} data.successUrl - URL to redirect to on successful checkout.
+ * @param {string} data.cancelUrl - URL to redirect to if the user cancels.
+ * @param {Object} context - Firebase context object.
+ * @returns {Object} - The session ID for Stripe checkout.
+ */
 exports.createCheckoutSession = functions.https.onCall(
   async (data, context) => {
     const { priceId, successUrl, cancelUrl } = data;
@@ -19,10 +27,11 @@ exports.createCheckoutSession = functions.https.onCall(
       );
     }
 
-    const userId = context.auth.uid;
-    const customerId = await getOrCreateCustomer(userId);
+    const userId = context.auth.uid; // Authenticated user's ID
+    const customerId = await getOrCreateCustomer(userId); // Fetch or create Stripe customer
 
     try {
+      // Create Stripe Checkout session
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         mode: "subscription",
@@ -32,7 +41,7 @@ exports.createCheckoutSession = functions.https.onCall(
         cancel_url: cancelUrl,
       });
 
-      return { sessionId: session.id };
+      return { sessionId: session.id }; // Return sessionId to the frontend
     } catch (error) {
       console.error("Error creating checkout session:", error);
       throw new functions.https.HttpsError(
@@ -43,7 +52,11 @@ exports.createCheckoutSession = functions.https.onCall(
   }
 );
 
-// Helper function to get or create a Stripe customer
+/**
+ * Helper function to get or create a Stripe customer.
+ * @param {string} userId - Firebase user ID.
+ * @returns {string} - Stripe customer ID.
+ */
 async function getOrCreateCustomer(userId) {
   const userDoc = await db.collection("users").doc(userId).get();
   const userData = userDoc.data();
@@ -66,6 +79,9 @@ async function getOrCreateCustomer(userId) {
 
 const endpointSecret = "whsec_your_webhook_secret"; // Replace with your secret
 
+/**
+ * Handles Stripe webhook events to update subscription data.
+ */
 exports.handleStripeWebhook = functions.https.onRequest(async (req, res) => {
   let event;
 
@@ -116,6 +132,13 @@ exports.handleStripeWebhook = functions.https.onRequest(async (req, res) => {
   res.status(200).send("Webhook received.");
 });
 
+/**
+ * Cancels a Stripe subscription for the authenticated user.
+ * @param {Object} data - Data sent from the frontend.
+ * @param {string} data.subscriptionId - Stripe subscription ID to cancel.
+ * @param {Object} context - Firebase context object.
+ * @returns {Object} - Confirmation of the cancellation.
+ */
 exports.cancelSubscription = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
     throw new functions.https.HttpsError(

@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-gray-400 py-8">
-      <div className="container mx-auto px-8 lg:px-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="container mx-auto px-6 lg:px-16 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Logo and Description */}
-        <div>
+        <div className="text-center md:text-left">
           <Link to="/" className="text-white text-2xl font-bold">
             Študentski Dogodki
           </Link>
@@ -18,7 +18,7 @@ const Footer = () => {
         </div>
 
         {/* Navigation Links */}
-        <div>
+        <div className="text-center md:text-left">
           <h3 className="text-white font-semibold mb-4">Navigacija</h3>
           <ul className="space-y-2">
             <li>
@@ -40,13 +40,13 @@ const Footer = () => {
         </div>
 
         {/* Contact and Social Links */}
-        <div>
+        <div className="text-center md:text-left">
           <h3 className="text-white font-semibold mb-4">Kontakt</h3>
           <p className="text-gray-500 mb-2">
             Email: info@studentski-dogodki.com
           </p>
           <p className="text-gray-500 mb-4">Telefon: +386 123 4567</p>
-          <div className="flex space-x-4">
+          <div className="flex justify-center md:justify-start space-x-4">
             <a
               href="#"
               className="hover:text-white transition"

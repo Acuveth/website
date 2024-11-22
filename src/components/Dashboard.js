@@ -4,7 +4,6 @@ import { UserContext } from "../Context/UserContext";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
-import SubscriptionPlans from "./Dashboard/SubscriptionPlans";
 import UserDashboard from "./Dashboard/UserDashboard";
 
 function Dashboard() {
@@ -43,7 +42,6 @@ function Dashboard() {
 
   return (
     <>
-      <NavbarLogedin />
       {isSubscribed === null ? ( // Show a loading state while fetching the subscription status
         <div className="text-white text-center mt-10">Loading...</div>
       ) : (

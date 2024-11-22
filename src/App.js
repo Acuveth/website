@@ -28,9 +28,9 @@ import FormWIR from "./components/Forms/FormWIR";
 import FormPromotorji from "./components/Forms/FormPromotorji";
 
 function App() {
+  //Naredi responsive website
   //Dodat vse slike, partnerje in napisat vse do konca - še popravt landing page
-  //- cancel subscription in naredi responsive website
-  //Setup backend for payment
+  //Setup backend for payment - cancel subscription
   return (
     <UserProvider>
       {/* Ensure UserProvider wraps everything */}

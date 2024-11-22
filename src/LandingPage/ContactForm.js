@@ -66,12 +66,12 @@ const ContactForm = ({ id }) => {
   };
 
   return (
-    <div id={id} className="max-w-4xl mx-auto p-6 text-white mb-10">
-      <div className="flex flex-col gap-8 ">
+    <div id={id} className="max-w-6xl mx-auto p-6 text-white mb-10">
+      <div className="flex flex-wrap gap-8 justify-center">
         {/* Information Column */}
-        <div className="flex flex-col justify-center items-center">
-          <h2 className="text-3xl font-bold mb-4">Kontaktirajte nas</h2>
-          <p className="text-lg mb-2">
+        <div className="flex flex-col items-center text-center w-full lg:w-1/3 space-y-4">
+          <h2 className="text-3xl font-bold">Kontaktirajte nas</h2>
+          <p className="text-lg">
             Email:{" "}
             <a
               href="mailto:info@studentski-dogodki.com"
@@ -80,7 +80,7 @@ const ContactForm = ({ id }) => {
               info@studentski-dogodki.com
             </a>
           </p>
-          <p className="text-lg flex items-center">
+          <p className="text-lg flex items-center justify-center">
             <FaInstagram className="text-white mr-2" size={30} />
             <a
               href="https://www.instagram.com/studentski_dogodki"
@@ -92,10 +92,11 @@ const ContactForm = ({ id }) => {
             </a>
           </p>
         </div>
+
         {/* Contact Form Column */}
-        <div className=" px-10 py-8 rounded-md shadow-2xl p-6">
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
+        <div className="w-full lg:w-2/3 px-4 py-6 rounded-md shadow-2xl bg-gray-800">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
               <label htmlFor="name" className="block text-sm font-medium mb-1">
                 Vaše Ime
               </label>
@@ -105,14 +106,14 @@ const ContactForm = ({ id }) => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white"
+                className="w-full p-3 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-custom-orange"
               />
               {formErrors.name && (
                 <p className="text-red-500 text-sm mt-1">{formErrors.name}</p>
               )}
             </div>
 
-            <div className="mb-4">
+            <div>
               <label htmlFor="email" className="block text-sm font-medium mb-1">
                 Vaš Email
               </label>
@@ -122,14 +123,14 @@ const ContactForm = ({ id }) => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white"
+                className="w-full p-3 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-custom-orange"
               />
               {formErrors.email && (
                 <p className="text-red-500 text-sm mt-1">{formErrors.email}</p>
               )}
             </div>
 
-            <div className="mb-4">
+            <div>
               <label
                 htmlFor="message"
                 className="block text-sm font-medium mb-1"
@@ -142,7 +143,7 @@ const ContactForm = ({ id }) => {
                 value={formData.message}
                 onChange={handleChange}
                 rows="5"
-                className="w-full p-2 border border-gray-600 rounded bg-gray-700 text-white"
+                className="w-full p-3 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-custom-orange"
               ></textarea>
               {formErrors.message && (
                 <p className="text-red-500 text-sm mt-1">
@@ -154,7 +155,7 @@ const ContactForm = ({ id }) => {
             <div className="flex justify-center">
               <button
                 type="submit"
-                className="bg-custom-orange text-white font-semibold py-2 px-4 rounded hover:bg-orange-600 transition items-center justify-center w-full"
+                className="bg-custom-orange text-white font-semibold py-3 px-6 rounded-md hover:bg-orange-600 transition w-full md:w-auto"
               >
                 Pošlji
               </button>

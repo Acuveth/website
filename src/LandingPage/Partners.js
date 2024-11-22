@@ -1,8 +1,12 @@
-// Partners.js
 import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Pagination, Navigation, Autoplay } from "swiper/modules";
+import "../Partners.css";
 
 const Partners = () => {
-  // Placeholder array of partner images. Replace these URLs with actual partner logos or images.
   const partners = [
     "https://via.placeholder.com/150",
     "https://via.placeholder.com/150",
@@ -13,28 +17,46 @@ const Partners = () => {
   ];
 
   return (
-    <div className="px-8 bg-gray-900 py-16 ">
-      {/* Section Title */}
+    <div className="px-8 bg-gray-900 py-16">
       <h2 className="text-3xl font-bold text-center text-white mb-8">
         Partnerji
       </h2>
-
-      {/* Partners Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 justify-items-center ">
+      <Swiper
+        spaceBetween={20}
+        loop={true}
+        autoplay={{ delay: 2000 }}
+        pagination={{ clickable: true }}
+        navigation={true}
+        modules={[Pagination, Navigation, Autoplay]}
+        breakpoints={{
+          // Define breakpoints for responsive behavior
+          320: {
+            slidesPerView: 2,
+          },
+          640: {
+            slidesPerView: 3,
+          },
+          768: {
+            slidesPerView: 4,
+          },
+          1024: {
+            slidesPerView: 5,
+          },
+        }}
+        className="mySwiper"
+      >
         {partners.map((partner, index) => (
-          <div
-            key={index}
-            className="w-32 h-32 flex items-center justify-center bg-gray-800 rounded-md shadow-2xl"
-          >
-            {/* Placeholder image, replace src with actual partner image URL */}
-            <img
-              src={partner}
-              alt={`Partner ${index + 1}`}
-              className="object-contain w-full h-full p-2"
-            />
-          </div>
+          <SwiperSlide key={index}>
+            <div className="w-32 h-32 flex items-center justify-center bg-gray-800 rounded-md shadow-2xl">
+              <img
+                src={partner}
+                alt={`Partner ${index + 1}`}
+                className="object-contain w-full h-full p-2"
+              />
+            </div>
+          </SwiperSlide>
         ))}
-      </div>
+      </Swiper>
     </div>
   );
 };

@@ -7,6 +7,7 @@ import FormStory from "../Forms/FormStory";
 import FormWIR from "../Forms/FormWIR";
 import FormPromotorji from "../Forms/FormPromotorji";
 import Settings from "../Settings";
+import NavbarLogedin from "../NavbarLogedin";
 import SubscriptionPlans from "./SubscriptionPlans";
 import { db } from "../../firebase";
 import {
@@ -137,143 +138,171 @@ function UserDashboard({ isSubscribed }) {
     loadUserPosts();
   }, [currentUserId]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1536) {
+        setIsExpanded(false);
+      } else {
+        setIsExpanded(true);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Call handler immediately to set initial state
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
-    <div className="flex flex-row min-h-screen bg-gray-900 text-white">
-      {/* Left Sidebar: Navbar and Forms */}
-      <aside
-        className={`relative ${
-          isExpanded ? "w-1/6" : "w-22"
-        } bg-gray-900 p-4 border-r border-gray-700 transition-all duration-300`}
-      >
-        <div
-          className="absolute -right-3 top-1/2 transform -translate-y-1/2 bg-gray-700 p-1 rounded-full cursor-pointer"
-          onClick={() => setIsExpanded(!isExpanded)}
+    <>
+      <NavbarLogedin
+        onFeatureSelect={setSelectedFeature}
+        selectedFeature={selectedFeature}
+        features={features}
+      />
+      <div className="flex flex-col md:flex-row min-h-screen bg-gray-900 text-white">
+        {/* Left Sidebar: Navbar and Forms */}
+        <aside
+          className={`hidden md:block relative ${
+            isExpanded ? "w-1/6" : "w-22"
+          } bg-gray-900 p-4 border-r border-gray-700 transition-all duration-300`}
         >
-          {isExpanded ? (
-            <FiChevronLeft className="text-white text-xl" />
-          ) : (
-            <FiChevronRight className="text-white text-xl" />
-          )}
-        </div>
-        <nav className="flex flex-col space-y-4">
-          {/* Top Section */}
-          <div>
-            <button
-              onClick={() => {
-                if (!isSubscribed) return; // Prevent navigation if unsubscribed
-                setSelectedFeature("dashboard");
-                setSelectedEvent(null);
-              }}
-              className={`w-full text-left px-4 py-2 flex items-center space-x-2 rounded-lg font-semibold ${
-                selectedFeature === "dashboard"
-                  ? "bg-gray-700"
-                  : "bg-gray-900 hover:bg-gray-700"
-              } ${!isSubscribed ? "opacity-50 cursor-not-allowed" : ""}`}
-            >
-              <FiGrid />
-              {isExpanded && <span>Dashboard</span>}
-            </button>
+          <div
+            className="absolute -right-3 top-1/2 transform -translate-y-1/2 bg-gray-700 p-1 rounded-full cursor-pointer"
+            onClick={() => setIsExpanded(!isExpanded)}
+          >
+            {isExpanded ? (
+              <FiChevronLeft className="text-white text-xl" />
+            ) : (
+              <FiChevronRight className="text-white text-xl" />
+            )}
           </div>
+          <nav className="flex flex-col space-y-4">
+            {/* Top Section */}
+            <div>
+              <button
+                onClick={() => {
+                  if (!isSubscribed) return; // Prevent navigation if unsubscribed
+                  setSelectedFeature("dashboard");
+                  setSelectedEvent(null);
+                }}
+                className={`w-full text-left px-4 py-2 flex items-center space-x-2 rounded-lg font-semibold ${
+                  selectedFeature === "dashboard"
+                    ? "bg-gray-700"
+                    : "bg-gray-900 hover:bg-gray-700"
+                } ${!isSubscribed ? "opacity-50 cursor-not-allowed" : ""}`}
+              >
+                <FiGrid />
+                {isExpanded && <span>Dashboard</span>}
+              </button>
+            </div>
 
-          {/* Middle Section: Forms */}
-          <div>
-            <h3
-              className={`${
-                isExpanded ? "text-sm font-bold text-gray-400 px-4" : "hidden"
-              }`}
-            >
-              Objave
-            </h3>
-            {features
-              .filter((feature) =>
-                [
-                  "form-objava",
-                  "form-story",
-                  "form-promotorji",
-                  "form-wir",
-                ].includes(feature.key)
-              )
-              .map((feature) => (
-                <button
-                  key={feature.key}
-                  onClick={() => {
-                    if (!isSubscribed) return; // Prevent navigation if unsubscribed
-                    setSelectedFeature(feature.key);
-                    setSelectedEvent(null);
-                  }}
-                  className={`w-full text-left px-4 py-2 flex items-center space-x-2 rounded-lg font-semibold ${
-                    selectedFeature === feature.key
-                      ? "bg-gray-700"
-                      : "bg-gray-900 hover:bg-gray-700"
-                  } ${!isSubscribed ? "opacity-50 cursor-not-allowed" : ""}`}
-                >
-                  {feature.icon}
-                  {isExpanded && <span>{feature.name}</span>}
-                </button>
-              ))}
-          </div>
+            {/* Middle Section: Forms */}
+            <div>
+              <h3
+                className={`${
+                  isExpanded ? "text-sm font-bold text-gray-400 px-4" : "hidden"
+                }`}
+              >
+                Objave
+              </h3>
+              {features
+                .filter((feature) =>
+                  [
+                    "form-objava",
+                    "form-story",
+                    "form-promotorji",
+                    "form-wir",
+                  ].includes(feature.key)
+                )
+                .map((feature) => (
+                  <button
+                    key={feature.key}
+                    onClick={() => {
+                      if (!isSubscribed) return; // Prevent navigation if unsubscribed
+                      setSelectedFeature(feature.key);
+                      setSelectedEvent(null);
+                    }}
+                    className={`w-full text-left px-4 py-2 flex items-center space-x-2 rounded-lg font-semibold ${
+                      selectedFeature === feature.key
+                        ? "bg-gray-700"
+                        : "bg-gray-900 hover:bg-gray-700"
+                    } ${!isSubscribed ? "opacity-50 cursor-not-allowed" : ""}`}
+                  >
+                    {feature.icon}
+                    {isExpanded && <span>{feature.name}</span>}
+                  </button>
+                ))}
+            </div>
 
-          {/* Bottom Section: Plans and Settings */}
-          <div>
-            <h3
-              className={`${
-                isExpanded ? "text-sm font-bold text-gray-400 px-4" : "hidden"
-              }`}
-            >
-              Nastavitve
-            </h3>
-            {features
-              .filter((feature) => ["plans", "settings"].includes(feature.key))
-              .map((feature) => (
-                <button
-                  key={feature.key}
-                  onClick={() => {
-                    setSelectedFeature(feature.key);
-                    setSelectedEvent(null);
-                  }}
-                  className={`w-full text-left px-4 py-2 flex items-center space-x-2 rounded-lg font-semibold ${
-                    selectedFeature === feature.key
-                      ? "bg-gray-700"
-                      : "bg-gray-900 hover:bg-gray-700"
-                  }`}
-                >
-                  {feature.icon}
-                  {isExpanded && <span>{feature.name}</span>}
-                </button>
-              ))}
-          </div>
-        </nav>
-      </aside>
-
-      {/* Middle Content: Dynamic Content */}
-      <main className="flex-1 p-4">
-        {selectedFeature === "dashboard" && (
-          <EventList
-            groupedPosts={groupedPosts}
-            onEventSelect={setSelectedEvent}
-          />
-        )}
-        {selectedFeature === "form-objava" && <FormObjava />}
-        {selectedFeature === "form-story" && <FormStory />}
-        {selectedFeature === "form-promotorji" && <FormPromotorji />}
-        {selectedFeature === "form-wir" && <FormWIR />}
-        {selectedFeature === "settings" && <Settings />}
-        {selectedFeature === "plans" && (
-          <SubscriptionPlans isSubscribed={isSubscribed} />
-        )}
-      </main>
-
-      {/* Right Sidebar: Stats Panel */}
-      {selectedEvent && (
-        <aside className="w-1/4 bg-gray-900 p-4">
-          <StatsPanel
-            selectedEvent={selectedEvent}
-            isSubscribed={isSubscribed}
-            posts={posts}
-          />
+            {/* Bottom Section: Plans and Settings */}
+            <div>
+              <h3
+                className={`${
+                  isExpanded ? "text-sm font-bold text-gray-400 px-4" : "hidden"
+                }`}
+              >
+                Nastavitve
+              </h3>
+              {features
+                .filter((feature) =>
+                  ["plans", "settings"].includes(feature.key)
+                )
+                .map((feature) => (
+                  <button
+                    key={feature.key}
+                    onClick={() => {
+                      setSelectedFeature(feature.key);
+                      setSelectedEvent(null);
+                    }}
+                    className={`w-full text-left px-4 py-2 flex items-center space-x-2 rounded-lg font-semibold ${
+                      selectedFeature === feature.key
+                        ? "bg-gray-700"
+                        : "bg-gray-900 hover:bg-gray-700"
+                    }`}
+                  >
+                    {feature.icon}
+                    {isExpanded && <span>{feature.name}</span>}
+                  </button>
+                ))}
+            </div>
+          </nav>
         </aside>
-      )}
-    </div>
+
+        {/* Middle Content: Dynamic Content */}
+        <main className="flex-1 p-4">
+          {selectedFeature === "dashboard" && (
+            <EventList
+              groupedPosts={groupedPosts}
+              onEventSelect={setSelectedEvent}
+            />
+          )}
+          {selectedFeature === "form-objava" && <FormObjava />}
+          {selectedFeature === "form-story" && <FormStory />}
+          {selectedFeature === "form-promotorji" && <FormPromotorji />}
+          {selectedFeature === "form-wir" && <FormWIR />}
+          {selectedFeature === "settings" && <Settings />}
+          {selectedFeature === "plans" && (
+            <SubscriptionPlans isSubscribed={isSubscribed} />
+          )}
+        </main>
+
+        {/* Right Sidebar: Stats Panel */}
+        {selectedEvent && (
+          <aside className="hidden lg:block lg:w-1/4 bg-gray-900 p-4">
+            <StatsPanel
+              selectedEvent={selectedEvent}
+              isSubscribed={isSubscribed}
+              posts={posts}
+            />
+          </aside>
+        )}
+      </div>
+    </>
   );
 }
 

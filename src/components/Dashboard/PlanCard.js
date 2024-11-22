@@ -6,25 +6,27 @@ const stripePromise = loadStripe(
   "pk_test_51Nbp2BJHLDPnt1PV1VsPqfX5BApggvywtQDVFBTh8wuPZG2ZtVN5LQaCjnnf4AvIdtz3jz1IYeApMMutSBsvT51X00a9BLCkYu"
 );
 
-function PlanCard({ plan, isSubscribed, currentPlanId }) {
+function PlanCard({ plan, isSubscribed }) {
   const handleSubscription = async () => {
     try {
-      const functions = getFunctions();
+      const functions = getFunctions(); // Initializes Firebase Functions
       const createCheckoutSession = httpsCallable(
         functions,
         "createCheckoutSession"
-      );
+      ); // References your backend function
 
       const successUrl = `${window.location.origin}/success`;
       const cancelUrl = `${window.location.origin}/cancel`;
 
+      // Calls the backend function with data (priceId, successUrl, cancelUrl)
       const { data } = await createCheckoutSession({
         priceId: plan.priceId,
         successUrl,
         cancelUrl,
       });
 
-      const stripe = await loadStripe("pk_test_your_publishable_key"); // Replace with your publishable key
+      // Redirect to Stripe Checkout using the sessionId returned by the backend
+      const stripe = await stripePromise;
       await stripe.redirectToCheckout({ sessionId: data.sessionId });
     } catch (error) {
       console.error("Error creating subscription:", error);

@@ -2,19 +2,19 @@ import React from "react";
 
 function StatsPanel({ selectedEvent, isSubscribed, posts }) {
   return (
-    <div className="text-white pr-4">
+    <div className="text-white pr-4 ">
       {selectedEvent ? (
         // Display selected event's details
-        <div className="bg-gray-800 p-6 rounded-3xl">
+        <div className="bg-gray-800 p-6 rounded-3xl ">
           {selectedEvent.type === "objave" ? (
             // Display objave-specific details
-            <div className="flex flex-col space-y-2">
+            <div className="flex flex-col space-y-2 ">
               <div className="flex flex-col items-center">
                 {selectedEvent.media ? (
                   <img
                     src={selectedEvent.media}
                     alt="Media"
-                    className="w-full w-full rounded-xl object-cover"
+                    className="w-1/2 xl:w-full rounded-xl object-cover"
                   />
                 ) : (
                   <span className="text-gray-400">No Media</span>
@@ -40,7 +40,7 @@ function StatsPanel({ selectedEvent, isSubscribed, posts }) {
           ) : selectedEvent.type === "stories" ? (
             // Display stories-specific details
             <div className="flex flex-col space-y-2">
-              <div className="flex flex-col">
+              <div className="flex flex-col items-center">
                 {selectedEvent.media ? (
                   <img
                     src={selectedEvent.media}
@@ -74,7 +74,7 @@ function StatsPanel({ selectedEvent, isSubscribed, posts }) {
           ) : selectedEvent.type === "promoters" ? (
             // Display promoters-specific details
             <div className="flex flex-col space-y-2">
-              <div className="flex">
+              <div className="flex items-center">
                 {selectedEvent.media ? (
                   <img
                     src={selectedEvent.media}

@@ -1,13 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
-html {
-    scroll-behavior: smooth;
-  }
-  
-
-  .swiper-container {
+.swiper-container {
     padding-bottom: 40px; /* Add space for pagination dots */
   }
   
@@ -25,4 +17,3 @@ html {
     background: orange;
     opacity: 1;
   }
-  
