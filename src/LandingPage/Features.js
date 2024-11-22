@@ -39,7 +39,7 @@ const Features = ({ id }) => {
             <img
               src={feature.image}
               alt={feature.title}
-              className="w-full max-w-md h-auto rounded-md shadow-md"
+              className="w-full max-w-2xl h-auto rounded-md shadow-md"
             />
           </div>
 

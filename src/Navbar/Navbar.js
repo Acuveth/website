@@ -18,8 +18,8 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <nav className="bg-gray-900 px-4 py-2 shadow-lg">
-      <div className="container mx-auto px-4 flex justify-between items-center">
+    <nav className="bg-gray-900 py-2 shadow-lg">
+      <div className="container mx-16 flex justify-between items-center">
         {/* Left Section: Logo */}
         <Link to="/" className="flex items-center">
           <img
