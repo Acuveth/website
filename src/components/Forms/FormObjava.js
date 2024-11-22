@@ -177,7 +177,7 @@ function FormObjava() {
               type="file"
               accept="image/*, video/*"
               onChange={handleFileChange}
-              className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-yellow-50 file:text-yellow-700 hover:file:bg-yellow-100 my-4"
+              className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-yellow-50 file:text-yellow-700 hover:file:bg-yellow-100 my-4"
             />
             {uploadProgress > 0 && (
               <p>Upload Progress: {Math.round(uploadProgress)}%</p>

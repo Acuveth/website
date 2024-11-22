@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { UserContext } from "../Context/UserContext";
+import { UserContext } from "../context/UserContext";
 import { db } from "../firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";

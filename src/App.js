@@ -6,26 +6,26 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import Login from "./components/Login";
-import Register from "./components/Register";
+import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
 import Dashboard from "./components/Dashboard";
-import Navbar from "./Navbar/Navbar";
+import Navbar from "./landing-page/navbar/Navbar";
 import Settings from "./components/Settings";
-import { UserProvider } from "./Context/UserContext"; // Only import the provider
-import FeaturesScreen from "./LandingPage/FeaturesScreen";
-import Footer from "./LandingPage/Footer";
-import Features from "./LandingPage/Features";
-import Pricing from "./LandingPage/Pricing";
-import LandingPage from "./LandingPage/LandingPage";
-import Partners from "./LandingPage/Partners";
-import ContactForm from "./LandingPage/ContactForm";
-import Success from "./components/Dashboard/Success";
-import Cancel from "./components/Dashboard/Cancel";
+import { UserProvider } from "./context/UserContext"; // Only import the provider
+import FeaturesScreen from "./landing-page/FeaturesScreen";
+import Footer from "./landing-page/Footer";
+import Features from "./landing-page/Features";
+import Pricing from "./landing-page/Pricing";
+import LandingPage from "./landing-page/LandingPage";
+import Partners from "./landing-page/Partners";
+import ContactForm from "./landing-page/ContactForm";
+import Success from "./components/stripe-payment/Success";
+import Cancel from "./components/stripe-payment/Cancel";
 // Import the form components
-import FormObjava from "./components/Forms/FormObjava";
-import FormStory from "./components/Forms/FormStory";
-import FormWIR from "./components/Forms/FormWIR";
-import FormPromotorji from "./components/Forms/FormPromotorji";
+import FormObjava from "./components/forms/FormObjava";
+import FormStory from "./components/forms/FormStory";
+import FormWIR from "./components/forms/FormWIR";
+import FormPromotorji from "./components/forms/FormPromotorji";
 
 function App() {
   //Dodat vse slike, partnerje in napisat vse do konca - še popravt landing page da zgleda nice

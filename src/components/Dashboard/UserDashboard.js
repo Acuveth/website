@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import EventList from "./EventList";
 import StatsPanel from "./StatsPanel";
-import FormObjava from "../Forms/FormObjava";
-import FormStory from "../Forms/FormStory";
-import FormWIR from "../Forms/FormWIR";
-import FormPromotorji from "../Forms/FormPromotorji";
+import FormObjava from "../forms/FormObjava";
+import FormStory from "../forms/FormStory";
+import FormWIR from "../forms/FormWIR";
+import FormPromotorji from "../forms/FormPromotorji";
 import Settings from "../Settings";
 import NavbarLogedin from "../NavbarLogedin";
-import SubscriptionPlans from "./SubscriptionPlans";
+import SubscriptionPlans from "../subscriptions/SubscriptionPlans";
 import { db } from "../../firebase";
 import {
   collection,

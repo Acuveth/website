@@ -5,10 +5,10 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { auth, db } from "../firebase"; // Import auth and db from your Firebase config
+import { auth, db } from "../../firebase"; // Import auth and db from your Firebase config
 import { doc, setDoc } from "firebase/firestore"; // Firestore for user data
 import { IoArrowBack } from "react-icons/io5"; // Import a back arrow icon
-import googleLogo from "../assets/google.png";
+import googleLogo from "../../assets/google.png";
 
 function Register() {
   const [name, setName] = useState("");

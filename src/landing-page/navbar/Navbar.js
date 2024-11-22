@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/logo.png";
+import logo from "../../assets/logo.png";
 import { Link as ScrollLink } from "react-scroll";
 import {
   FiMenu,
@@ -18,8 +18,8 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <nav className="bg-gray-900 py-2 shadow-lg">
-      <div className="container mx-16 flex justify-between items-center">
+    <nav className="bg-gray-900 py-4 shadow-lg">
+      <div className="container mx-auto px-4 flex justify-between items-center">
         {/* Left Section: Logo */}
         <Link to="/" className="flex items-center">
           <img
@@ -74,7 +74,7 @@ const Navbar = () => {
         {/* Mobile Menu Button */}
         <button
           onClick={toggleMenu}
-          className="block md:hidden text-white text-2xl"
+          className="block md:hidden text-white text-2xl focus:outline-none"
         >
           {isMenuOpen ? <FiX /> : <FiMenu />}
         </button>
@@ -82,7 +82,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-gray-800 text-white mt-2 py-2 rounded-lg shadow-lg ">
+        <div className="md:hidden bg-gray-800 text-white mt-2 py-2 rounded-lg shadow-lg transition-all duration-300">
           <ScrollLink
             to="onas"
             smooth={true}

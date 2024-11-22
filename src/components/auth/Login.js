@@ -5,10 +5,10 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { UserContext } from "../Context/UserContext";
-import { auth } from "../firebase"; // Import Firebase auth
+import { UserContext } from "../../context/UserContext";
+import { auth } from "../../firebase"; // Import Firebase auth
 import { IoArrowBack } from "react-icons/io5"; // Import a back arrow icon
-import googleLogo from "../assets/google.png";
+import googleLogo from "../../assets/google.png";
 
 function Login() {
   const [email, setEmail] = useState("");
