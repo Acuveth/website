@@ -45,11 +45,11 @@ const Pricing = ({ id }) => {
       <p className="text-gray-400 mb-12">Izberi paket in doseži tisoče ljudi</p>
 
       {/* Pricing Cards */}
-      <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-8">
+      <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-16">
         {plans.map((plan, index) => (
           <div
             key={index}
-            className="flex flex-col justify-between shadow-2xl py-8 px-6 border hover:border-custom-orange rounded-lg bg-gray-800 text-white transition-transform transform hover:scale-105"
+            className="flex flex-col justify-between shadow-2xl py-8 px-6 border hover:border-custom-orange rounded-xl bg-gray-800 text-white transition-transform transform hover:scale-105"
           >
             <div>
               <h3 className="text-2xl font-semibold mb-4">{plan.name}</h3>

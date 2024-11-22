@@ -94,7 +94,7 @@ const ContactForm = ({ id }) => {
         </div>
 
         {/* Contact Form Column */}
-        <div className="w-full lg:w-2/3 px-4 py-6 rounded-md shadow-2xl bg-gray-800">
+        <div className="w-full lg:w-2/3 px-8 py-6 rounded-xl shadow-2xl bg-gray-800">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm font-medium mb-1">

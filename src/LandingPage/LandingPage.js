@@ -14,7 +14,7 @@ const LandingPage = ({ id }) => {
       className="flex flex-col md:flex-row items-center min-h-screen bg-gray-900 text-white p-6 md:p-12"
     >
       {/* Left Side: Text and CTA */}
-      <div className="w-full md:w-1/2 text-center md:text-left space-y-6">
+      <div className="w-full md:w-1/2 text-center md:text-left space-y-6 ">
         {/* Big Text */}
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold">
           Študentski Dogodki
