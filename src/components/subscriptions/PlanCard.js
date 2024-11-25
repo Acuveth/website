@@ -19,10 +19,22 @@ function PlanCard({ plan, isSubscribed }) {
         "pk_test_51Nbp2BJHLDPnt1PV1VsPqfX5BApggvywtQDVFBTh8wuPZG2ZtVN5LQaCjnnf4AvIdtz3jz1IYeApMMutSBsvT51X00a9BLCkYu"
       ); // Replace with your Stripe Publishable Key
 
+      if (!stripe) {
+        alert("Stripe initialization failed. Please try again.");
+        return;
+      }
+
       // Redirect to Stripe Checkout
-      await stripe.redirectToCheckout({ sessionId: data.sessionId });
+      const { error } = await stripe.redirectToCheckout({
+        sessionId: data.sessionId,
+      });
+
+      if (error) {
+        console.error("Stripe checkout error:", error.message);
+        alert("An error occurred during Stripe checkout. Please try again.");
+      }
     } catch (error) {
-      console.error("Error during checkout session creation:", error.message);
+      console.error("Error creating checkout session:", error.message);
       alert("An error occurred. Please try again later.");
     }
   };
@@ -62,7 +74,11 @@ function PlanCard({ plan, isSubscribed }) {
 
       <button
         onClick={handleSubscription}
-        className="w-full py-3 rounded-xl font-semibold bg-custom-orange hover:bg-custom-orange-dark-20 text-white transition-colors duration-300"
+        className={`w-full py-3 rounded-xl font-semibold ${
+          isGrayOut()
+            ? "bg-gray-500 cursor-not-allowed"
+            : "bg-custom-orange hover:bg-custom-orange-dark-20"
+        } text-white transition-colors duration-300`}
         disabled={isGrayOut()} // Disable the button for grayed-out plans
       >
         {isGrayOut()

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import NavbarLogedin from "./NavbarLogedin";
 import { UserContext } from "../context/UserContext";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
@@ -21,6 +20,7 @@ function Dashboard() {
 
         if (userSnap.exists()) {
           const userData = userSnap.data();
+          console.log(userData);
           setIsSubscribed(userData.isSubscribed || 0);
         } else {
           console.error("User data not found!");
@@ -29,12 +29,13 @@ function Dashboard() {
         console.error("Error fetching subscription status:", error);
       }
     };
-
+    console.log(user);
     fetchSubscriptionStatus();
   }, [user]);
 
   // Redirect to the "Pregled Planov" tab if the user is not subscribed
   useEffect(() => {
+    console.log(isSubscribed);
     if (isSubscribed === 0) {
       navigate("/dashboard?tab=plans");
     }

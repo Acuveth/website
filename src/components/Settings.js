@@ -22,11 +22,9 @@ const Settings = () => {
 
         if (docSnap.exists()) {
           setUserData(docSnap.data());
-          if (docSnap.data().subscriptionId) {
-            setSubscription({
-              subscriptionId: docSnap.data().subscriptionId,
-              plan: docSnap.data().plan,
-            });
+          console.log(docSnap.data());
+          if (docSnap.data().isSubscribed != 0) {
+            setSubscription(true);
           }
         } else {
           setUserData(null);
@@ -225,25 +223,20 @@ const Settings = () => {
           </button>
         )}
         <div className="mt-8">
-          <h2 className="text-xl font-semibold">Subscription</h2>
-          {subscription ? (
-            <div className="mt-4">
-              <p>Plan: {subscription.plan}</p>
-              <button
-                onClick={cancelSubscription}
-                disabled={isCancelling}
-                className={`mt-2 px-4 py-2 rounded ${
-                  isCancelling
-                    ? "bg-gray-500 cursor-not-allowed"
-                    : "bg-red-600 hover:bg-red-700"
-                }`}
-              >
-                {isCancelling ? "Cancelling..." : "Cancel Subscription"}
-              </button>
-            </div>
-          ) : (
-            <p className="mt-4 text-gray-400">No active subscription</p>
-          )}
+          <h2 className="text-xl font-semibold">Naročnina</h2>
+          <div className="mt-4">
+            <button
+              onClick={() =>
+                window.open(
+                  "https://billing.stripe.com/p/login/test_9AQ8zb4go4q64WQ3cc",
+                  "_blank"
+                )
+              }
+              className="mt-2 px-4 py-2 rounded bg-red-600 hover:bg-red-700"
+            >
+              Uredi Naročnino
+            </button>
+          </div>
         </div>
       </div>
     </div>

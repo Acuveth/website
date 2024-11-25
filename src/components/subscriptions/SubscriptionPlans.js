@@ -61,8 +61,7 @@ function SubscriptionPlans({ isSubscribed }) {
           <PlanCard
             key={plan.id}
             plan={plan}
-            billingCycle={billingCycle}
-            isSubscribed={isSubscribed}
+            isSubscribed={isSubscribed} // Pass subscription status
           />
         ))}
       </div>

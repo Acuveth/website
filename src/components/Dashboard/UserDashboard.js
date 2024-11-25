@@ -92,6 +92,7 @@ function UserDashboard({ isSubscribed }) {
         where("userId", "==", userId),
         orderBy("createdAt", "desc")
       );
+
       const querySnapshot = await getDocs(q);
 
       querySnapshot.forEach((doc) => {
@@ -99,6 +100,7 @@ function UserDashboard({ isSubscribed }) {
       });
     }
     allPosts.sort((a, b) => b.createdAt?.toMillis() - a.createdAt?.toMillis());
+
     return allPosts;
   };
 

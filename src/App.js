@@ -11,7 +11,7 @@ import Register from "./components/auth/Register";
 import Dashboard from "./components/Dashboard";
 import Navbar from "./landing-page/navbar/Navbar";
 import Settings from "./components/Settings";
-import { UserProvider } from "./context/UserContext"; // Only import the provider
+import { UserProvider } from "./context/UserContext";
 import FeaturesScreen from "./landing-page/FeaturesScreen";
 import Footer from "./landing-page/Footer";
 import Features from "./landing-page/Features";
