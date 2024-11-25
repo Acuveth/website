@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Link } from "react-router-dom";
+
 const Pricing = ({ id }) => {
   const plans = [
     {
@@ -7,7 +9,7 @@ const Pricing = ({ id }) => {
       price: "30€",
       frequency: "/mesec",
       features: ["Neomejeno Storyijev", "Dogodki v Week in review"],
-      buttonLabel: "Get Basic Access",
+      buttonLabel: "Pridobi Osnovni Paket",
       buttonStyle: "bg-gray-700 text-white",
     },
     {
@@ -19,7 +21,7 @@ const Pricing = ({ id }) => {
         "Neomejeno Storyijev",
         "Dogodki v Week in review",
       ],
-      buttonLabel: "Get Standard Access",
+      buttonLabel: "Pridobi Standard Paket",
       buttonStyle: "bg-gray-700 text-white",
     },
     {
@@ -33,7 +35,7 @@ const Pricing = ({ id }) => {
         "Promocija preko promotorjev",
         "Najem Content ekipe",
       ],
-      buttonLabel: "Get Premium Access",
+      buttonLabel: "Pridobi Premium Paket",
       buttonStyle: "bg-gray-700 text-white",
     },
   ];
@@ -72,11 +74,13 @@ const Pricing = ({ id }) => {
                 ))}
               </ul>
             </div>
-            <button
-              className={`w-full py-3 rounded-md font-semibold ${plan.buttonStyle} hover:opacity-90 hover:bg-custom-orange`}
-            >
-              {plan.buttonLabel}
-            </button>
+            <Link to="/login">
+              <button
+                className={`w-full py-3 rounded-md font-semibold ${plan.buttonStyle} hover:opacity-90 hover:bg-custom-orange`}
+              >
+                {plan.buttonLabel}
+              </button>
+            </Link>
           </div>
         ))}
       </div>

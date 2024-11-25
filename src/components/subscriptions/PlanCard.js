@@ -1,40 +1,32 @@
-import React, { useEffect, useState } from "react";
-import { loadStripe } from "@stripe/stripe-js";
+import React from "react";
 import { getFunctions, httpsCallable } from "firebase/functions";
-
-const stripePromise = loadStripe(
-  "pk_test_51Nbp2BJHLDPnt1PV1VsPqfX5BApggvywtQDVFBTh8wuPZG2ZtVN5LQaCjnnf4AvIdtz3jz1IYeApMMutSBsvT51X00a9BLCkYu"
-);
+import { loadStripe } from "@stripe/stripe-js";
 
 function PlanCard({ plan, isSubscribed }) {
+  const functions = getFunctions(); // Access Firebase Functions
+  const createCheckoutSession = httpsCallable(
+    functions,
+    "createCheckoutSession"
+  ); // Call your function
+
   const handleSubscription = async () => {
     try {
-      const functions = getFunctions(); // Initializes Firebase Functions
-      const createCheckoutSession = httpsCallable(
-        functions,
-        "createCheckoutSession"
-      ); // References your backend function
+      // Call Firebase Function with the priceId of the selected plan
+      const { data } = await createCheckoutSession({ priceId: plan.priceId });
 
-      const successUrl = `${window.location.origin}/success`;
-      const cancelUrl = `${window.location.origin}/cancel`;
+      // Initialize Stripe
+      const stripe = await loadStripe(
+        "pk_test_51Nbp2BJHLDPnt1PV1VsPqfX5BApggvywtQDVFBTh8wuPZG2ZtVN5LQaCjnnf4AvIdtz3jz1IYeApMMutSBsvT51X00a9BLCkYu"
+      ); // Replace with your Stripe Publishable Key
 
-      // Calls the backend function with data (priceId, successUrl, cancelUrl)
-      const { data } = await createCheckoutSession({
-        priceId: plan.priceId,
-        successUrl,
-        cancelUrl,
-      });
-
-      // Redirect to Stripe Checkout using the sessionId returned by the backend
-      const stripe = await stripePromise;
+      // Redirect to Stripe Checkout
       await stripe.redirectToCheckout({ sessionId: data.sessionId });
     } catch (error) {
-      console.error("Error creating subscription:", error);
-      alert("Failed to create subscription. Please try again.");
+      console.error("Error during checkout session creation:", error.message);
+      alert("An error occurred. Please try again later.");
     }
   };
 
-  // Determine if the plan should be grayed out based on the user's subscription status
   const isGrayOut = () => {
     if (isSubscribed === 0) return false; // No subscription yet
     if (isSubscribed && plan.id === isSubscribed) return true; // Current plan is grayed out
