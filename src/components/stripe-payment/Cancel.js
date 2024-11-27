@@ -12,7 +12,7 @@ function Cancel() {
         free to contact us.
       </p>
       <a
-        href="/plans"
+        href="/dashboard"
         className="mt-6 px-6 py-3 bg-red-700 text-white rounded-md hover:bg-red-800 transition"
       >
         Go Back to Home

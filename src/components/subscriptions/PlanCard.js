@@ -1,18 +1,65 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { getFunctions, httpsCallable } from "firebase/functions";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { loadStripe } from "@stripe/stripe-js";
+import { getAuth } from "firebase/auth";
 
-function PlanCard({ plan, isSubscribed }) {
+function PlanCard({ plan, userId }) {
   const functions = getFunctions(); // Access Firebase Functions
+  const db = getFirestore(); // Access Firestore
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
+
+  const [isSubscribed, setIsSubscribed] = useState(0); // Default: not subscribed
+
+  // Fetch subscription status from Firestore
+  useEffect(() => {
+    console.log();
+    if (!userId) return;
+
+    const fetchSubscriptionStatus = async () => {
+      try {
+        const userRef = doc(db, "users", userId);
+        const userSnapshot = await getDoc(userRef);
+
+        if (userSnapshot.exists()) {
+          const userData = userSnapshot.data();
+          console.log("Fetched user data:", userData);
+          setIsSubscribed(
+            userData.subscriptionStatus === "active" ? plan.id : 0
+          ); // Adjust based on your subscription logic
+        } else {
+          console.error("User document not found in Firestore");
+        }
+      } catch (error) {
+        console.error("Error fetching subscription status:", error.message);
+      }
+    };
+
+    fetchSubscriptionStatus();
+  }, [userId, db, plan.id]);
+
   const createCheckoutSession = httpsCallable(
     functions,
     "createCheckoutSession"
   ); // Call your function
 
   const handleSubscription = async () => {
+    console.log("Price id frontend:", plan.priceId);
+    console.log("User id frontend:", currentUser.uid);
     try {
-      // Call Firebase Function with the priceId of the selected plan
-      const { data } = await createCheckoutSession({ priceId: plan.priceId });
+      // Call Firebase Function with the priceId of the selected plan and userId
+      const { data } = await createCheckoutSession({
+        priceId: plan.priceId,
+        userId: currentUser.uid,
+      });
+      console.log("Checkout session response:", data);
+
+      if (!data || !data.sessionId) {
+        console.error("Invalid response from createCheckoutSession:", data);
+        alert("An error occurred while creating the checkout session.");
+        return;
+      }
 
       // Initialize Stripe
       const stripe = await loadStripe(

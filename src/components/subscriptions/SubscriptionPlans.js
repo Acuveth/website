@@ -14,8 +14,8 @@ function SubscriptionPlans({ isSubscribed }) {
         "Napredna analitika promocij",
         "Prednostna podpora za stranke",
       ],
-      productId: "prod_RDzO4pZbNU2lzK",
-      priceId: "price_1QLXPLJHLDPnt1PV3cQTCkVr",
+      productId: "prod_RHb6xLQv8qrU2q",
+      priceId: "price_1QP1ulJHLDPnt1PVB9FeHlGM",
     },
     {
       id: 2,
@@ -27,8 +27,8 @@ function SubscriptionPlans({ isSubscribed }) {
         "Napredna analitika promocij",
         "Razširjena podpora za stranke",
       ],
-      productId: "prod_RDzO0Z1eXjQzcD",
-      priceId: "price_1QLXPZJHLDPnt1PVecETfyB9",
+      productId: "prod_RHb7EGddLG2tKw",
+      priceId: "price_1QP1vSJHLDPnt1PVXJrdjmAf",
     },
     {
       id: 3,
@@ -42,8 +42,8 @@ function SubscriptionPlans({ isSubscribed }) {
         "Napredna analitika promocij",
         "Popolna podpora za stranke",
       ],
-      productId: "prod_RDzOrgDbOvGOWy",
-      priceId: "price_1QLXPnJHLDPnt1PVJJktNvWi",
+      productId: "prod_RHb7O45oW50rk8",
+      priceId: "price_1QP1vfJHLDPnt1PVHjjkjZfl",
     },
   ];
 

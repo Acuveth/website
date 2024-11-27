@@ -16,7 +16,12 @@ import {
   FiSettings,
 } from "react-icons/fi"; // Import icons
 
-const NavbarLogedin = ({ onFeatureSelect, selectedFeature, features }) => {
+const NavbarLogedin = ({
+  onFeatureSelect,
+  selectedFeature,
+  features,
+  isSubscribed,
+}) => {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
