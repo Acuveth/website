@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",
+    "@fontsource/inter": "^5.1.0",
     "@heroicons/react": "^1.0.6",
     "@stripe/stripe-js": "^4.10.0",
     "@testing-library/jest-dom": "^5.17.0",
