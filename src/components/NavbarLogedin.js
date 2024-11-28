@@ -3,18 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { UserContext } from "../context/UserContext";
 import { getAuth, signOut } from "firebase/auth";
-import {
-  FiLogOut,
-  FiMenu,
-  FiX,
-  FiGrid,
-  FiEdit,
-  FiFileText,
-  FiUsers,
-  FiCalendar,
-  FiClipboard,
-  FiSettings,
-} from "react-icons/fi"; // Import icons
+import { FiLogOut, FiMenu, FiX } from "react-icons/fi"; // Import icons
 
 const NavbarLogedin = ({
   onFeatureSelect,
@@ -80,23 +69,31 @@ const NavbarLogedin = ({
       {isMenuOpen && (
         <div className="md:hidden bg-gray-800 text-white mt-2 rounded-lg shadow-lg">
           {/* Sidebar Features */}
-          {features.map((feature) => (
-            <button
-              key={feature.key}
-              onClick={() => {
-                onFeatureSelect(feature.key);
-                toggleMenu();
-              }}
-              className={`block w-full text-left px-4 py-2 flex items-center space-x-2 rounded-lg font-semibold ${
-                selectedFeature === feature.key
-                  ? "bg-gray-700"
-                  : "hover:bg-gray-700"
-              }`}
-            >
-              {feature.icon}
-              <span>{feature.name}</span>
-            </button>
-          ))}
+          {features.map((feature) => {
+            const isRestricted = feature.restricted && !isSubscribed;
+            return (
+              <button
+                key={feature.key}
+                onClick={() => {
+                  if (!isRestricted) {
+                    onFeatureSelect(feature.key);
+                    toggleMenu();
+                  }
+                }}
+                className={`block w-full text-left px-4 py-2 flex items-center space-x-2 rounded-lg font-semibold ${
+                  selectedFeature === feature.key
+                    ? "bg-gray-700"
+                    : isRestricted
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:bg-gray-700"
+                }`}
+                disabled={isRestricted}
+              >
+                {feature.icon}
+                <span>{feature.name}</span>
+              </button>
+            );
+          })}
           <div className="border-t border-gray-700 my-2"></div>
           {/* Logout Option */}
           <button

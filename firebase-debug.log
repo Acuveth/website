@@ -1,0 +1,194 @@
+[debug] [2024-11-28T09:41:50.630Z] ----------------------------------------------------------------------
+[debug] [2024-11-28T09:41:50.635Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\gaberscekl\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions --debug
+[debug] [2024-11-28T09:41:50.635Z] CLI Version:   13.27.0
+[debug] [2024-11-28T09:41:50.635Z] Platform:      win32
+[debug] [2024-11-28T09:41:50.636Z] Node Version:  v22.11.0
+[debug] [2024-11-28T09:41:50.636Z] Time:          Thu Nov 28 2024 10:41:50 GMT+0100 (Srednjeevropski standardni čas)
+[debug] [2024-11-28T09:41:50.636Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-11-28T09:41:50.642Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2024-11-28T09:41:50.778Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-11-28T09:41:50.779Z] > authorizing via signed-in user (lukagaberscek3@gmail.com)
+[debug] [2024-11-28T09:41:50.780Z] [iam] checking project studentski-dogodki for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2024-11-28T09:41:50.782Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:41:50.783Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:41:50.783Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/studentski-dogodki:testIamPermissions [none]
+[debug] [2024-11-28T09:41:50.784Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/studentski-dogodki:testIamPermissions x-goog-quota-user=projects/studentski-dogodki
+[debug] [2024-11-28T09:41:50.785Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/studentski-dogodki:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2024-11-28T09:41:51.919Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/studentski-dogodki:testIamPermissions 200
+[debug] [2024-11-28T09:41:51.921Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/studentski-dogodki:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2024-11-28T09:41:51.922Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:41:51.922Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:41:51.923Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/studentski-dogodki/serviceAccounts/studentski-dogodki@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2024-11-28T09:41:51.923Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/studentski-dogodki/serviceAccounts/studentski-dogodki@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2024-11-28T09:41:52.981Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/studentski-dogodki/serviceAccounts/studentski-dogodki@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2024-11-28T09:41:52.981Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/studentski-dogodki/serviceAccounts/studentski-dogodki@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'studentski-dogodki'...
+[info] 
+[info] i  deploying functions 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run lint
+[info] +  functions: Finished running predeploy script. 
+[debug] [2024-11-28T09:42:01.641Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:42:01.641Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:42:01.642Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/studentski-dogodki [none]
+[debug] [2024-11-28T09:42:01.692Z] *** [apiv2] error from fetch(https://cloudresourcemanager.googleapis.com/v1/projects/studentski-dogodki, {"headers":{},"method":"GET"}): FetchError: request to https://cloudresourcemanager.googleapis.com/v1/projects/studentski-dogodki failed, reason: read ECONNRESET
+[debug] [2024-11-28T09:42:01.751Z] FetchError: request to https://cloudresourcemanager.googleapis.com/v1/projects/studentski-dogodki failed, reason: read ECONNRESET
+    at ClientRequest.<anonymous> (C:\Users\gaberscekl\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\node-fetch\lib\index.js:1501:11)
+    at ClientRequest.emit (node:events:518:28)
+    at ClientRequest.emit (node:domain:489:12)
+    at emitErrorEvent (node:_http_client:103:11)
+    at TLSSocket.socketErrorListener (node:_http_client:506:5)
+    at TLSSocket.emit (node:events:518:28)
+    at TLSSocket.emit (node:domain:489:12)
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+[error] 
+[error] Error: Failed to make request to https://cloudresourcemanager.googleapis.com/v1/projects/studentski-dogodki
+[debug] [2024-11-28T09:47:24.412Z] ----------------------------------------------------------------------
+[debug] [2024-11-28T09:47:24.419Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\gaberscekl\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions --debug
+[debug] [2024-11-28T09:47:24.419Z] CLI Version:   13.27.0
+[debug] [2024-11-28T09:47:24.419Z] Platform:      win32
+[debug] [2024-11-28T09:47:24.419Z] Node Version:  v22.11.0
+[debug] [2024-11-28T09:47:24.420Z] Time:          Thu Nov 28 2024 10:47:24 GMT+0100 (Srednjeevropski standardni čas)
+[debug] [2024-11-28T09:47:24.420Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-11-28T09:47:24.429Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2024-11-28T09:47:24.575Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-11-28T09:47:24.577Z] > authorizing via signed-in user (lukagaberscek3@gmail.com)
+[debug] [2024-11-28T09:47:24.578Z] [iam] checking project studentski-dogodki for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2024-11-28T09:47:24.581Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:24.581Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:24.582Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/studentski-dogodki:testIamPermissions [none]
+[debug] [2024-11-28T09:47:24.583Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/studentski-dogodki:testIamPermissions x-goog-quota-user=projects/studentski-dogodki
+[debug] [2024-11-28T09:47:24.583Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/studentski-dogodki:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2024-11-28T09:47:25.698Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/studentski-dogodki:testIamPermissions 200
+[debug] [2024-11-28T09:47:25.699Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/studentski-dogodki:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2024-11-28T09:47:25.700Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:25.700Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:25.701Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/studentski-dogodki/serviceAccounts/studentski-dogodki@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2024-11-28T09:47:25.701Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/studentski-dogodki/serviceAccounts/studentski-dogodki@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2024-11-28T09:47:26.807Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/studentski-dogodki/serviceAccounts/studentski-dogodki@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2024-11-28T09:47:26.808Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/studentski-dogodki/serviceAccounts/studentski-dogodki@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'studentski-dogodki'...
+[info] 
+[info] i  deploying functions 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run lint
+[info] +  functions: Finished running predeploy script. 
+[debug] [2024-11-28T09:47:37.486Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:37.487Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:37.489Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/studentski-dogodki [none]
+[debug] [2024-11-28T09:47:38.605Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/studentski-dogodki 200
+[debug] [2024-11-28T09:47:38.606Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/studentski-dogodki {"projectNumber":"835239593044","projectId":"studentski-dogodki","lifecycleState":"ACTIVE","name":"Studentski Dogodki","labels":{"firebase":"enabled"},"createTime":"2024-10-08T19:20:12.703573Z"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[debug] [2024-11-28T09:47:38.613Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:38.614Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:38.615Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:38.616Z] Checked if tokens are valid: true, expires at: 1732790486804
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[debug] [2024-11-28T09:47:38.617Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:38.618Z] Checked if tokens are valid: true, expires at: 1732790486804
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2024-11-28T09:47:38.620Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:38.621Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:38.622Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/cloudfunctions.googleapis.com [none]
+[debug] [2024-11-28T09:47:38.623Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/studentski-dogodki
+[debug] [2024-11-28T09:47:38.628Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/runtimeconfig.googleapis.com [none]
+[debug] [2024-11-28T09:47:38.630Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/studentski-dogodki
+[debug] [2024-11-28T09:47:38.635Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/cloudbuild.googleapis.com [none]
+[debug] [2024-11-28T09:47:38.636Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/cloudbuild.googleapis.com x-goog-quota-user=projects/studentski-dogodki
+[debug] [2024-11-28T09:47:38.639Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/artifactregistry.googleapis.com [none]
+[debug] [2024-11-28T09:47:38.640Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/artifactregistry.googleapis.com x-goog-quota-user=projects/studentski-dogodki
+[debug] [2024-11-28T09:47:39.907Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/cloudbuild.googleapis.com 200
+[debug] [2024-11-28T09:47:39.910Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/cloudbuild.googleapis.com [omitted]
+[info] +  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2024-11-28T09:47:39.928Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/runtimeconfig.googleapis.com 200
+[debug] [2024-11-28T09:47:39.930Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2024-11-28T09:47:39.937Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/cloudfunctions.googleapis.com 200
+[debug] [2024-11-28T09:47:39.938Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/cloudfunctions.googleapis.com [omitted]
+[info] +  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2024-11-28T09:47:39.953Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/artifactregistry.googleapis.com 200
+[debug] [2024-11-28T09:47:39.955Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/artifactregistry.googleapis.com [omitted]
+[info] +  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2024-11-28T09:47:39.972Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:39.973Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:39.974Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/studentski-dogodki/adminSdkConfig [none]
+[debug] [2024-11-28T09:47:40.744Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/studentski-dogodki/adminSdkConfig 200
+[debug] [2024-11-28T09:47:40.744Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/studentski-dogodki/adminSdkConfig {"projectId":"studentski-dogodki","storageBucket":"studentski-dogodki.firebasestorage.app"}
+[debug] [2024-11-28T09:47:40.745Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:40.746Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:40.746Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/studentski-dogodki/configs [none]
+[debug] [2024-11-28T09:47:41.346Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/studentski-dogodki/configs 200
+[debug] [2024-11-28T09:47:41.346Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/studentski-dogodki/configs {"configs":[{"name":"projects/studentski-dogodki/configs/stripe"}]}
+[debug] [2024-11-28T09:47:41.347Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:41.347Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:41.348Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/studentski-dogodki/configs/stripe/variables [none]
+[debug] [2024-11-28T09:47:42.088Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/studentski-dogodki/configs/stripe/variables 200
+[debug] [2024-11-28T09:47:42.089Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/studentski-dogodki/configs/stripe/variables {"variables":[{"name":"projects/studentski-dogodki/configs/stripe/variables/secret","updateTime":"2024-11-24T15:25:17.095841955Z"}]}
+[debug] [2024-11-28T09:47:42.093Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:42.095Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:42.097Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/studentski-dogodki/configs/stripe/variables/secret [none]
+[debug] [2024-11-28T09:47:42.302Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/studentski-dogodki/configs/stripe/variables/secret 200
+[debug] [2024-11-28T09:47:42.304Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/studentski-dogodki/configs/stripe/variables/secret {"name":"projects/studentski-dogodki/configs/stripe/variables/secret","updateTime":"2024-11-24T15:25:17.095841955Z","text":"sk_test_51Nbp2BJHLDPnt1PVLLW3s3dA7PRLv8AAs5ucAcWrstgbvP7K8qEY4RclqMVubCOxJt67LXhF2g70SS6MG56ChXKY00fzroQQUg"}
+[debug] [2024-11-28T09:47:42.315Z] Validating nodejs source
+[warn] !  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[debug] [2024-11-28T09:47:44.772Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint . --ext .js --fix",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^12.6.0",
+    "firebase-functions": "^6.0.1",
+    "stripe": "^17.4.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "eslint": "^8.15.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^3.1.0"
+  },
+  "private": true
+}
+[debug] [2024-11-28T09:47:44.776Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase default to determine what to deploy 
+[debug] [2024-11-28T09:47:44.779Z] Could not find functions.yaml. Must use http discovery
+[debug] [2024-11-28T09:47:44.796Z] Found firebase-functions binary at 'C:\Users\gaberscekl\Desktop\Sdg spletna\website\functions\node_modules\.bin\firebase-functions'
+[debug] [2024-11-28T09:47:44.822Z] *** [apiv2] error from fetch(https://firebase-public.firebaseio.com/cli.json, {"headers":{},"method":"GET"}): FetchError: request to https://firebase-public.firebaseio.com/cli.json failed, reason: read ECONNRESET
+[warn] !  Unable to fetch the CLI MOTD and remote config. This is not a fatal error, but may indicate an issue with your network connection. 
+[debug] [2024-11-28T09:47:44.823Z] Failed to fetch MOTD FirebaseError: Failed to make request to https://firebase-public.firebaseio.com/cli.json
+[info] Serving at port 8319
+
+[debug] [2024-11-28T09:47:47.068Z] Got response from /__/functions.yaml {"endpoints":{"createCheckoutSession":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"httpsTrigger":{},"entryPoint":"createCheckoutSession"},"stripeWebhook":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"httpsTrigger":{},"entryPoint":"stripeWebhook"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[info] i  extensions: ensuring required API firebaseextensions.googleapis.com is enabled... 
+[debug] [2024-11-28T09:47:51.132Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:51.132Z] Checked if tokens are valid: true, expires at: 1732790486804
+[debug] [2024-11-28T09:47:51.133Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/firebaseextensions.googleapis.com [none]
+[debug] [2024-11-28T09:47:51.133Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/firebaseextensions.googleapis.com x-goog-quota-user=projects/studentski-dogodki
+[debug] [2024-11-28T09:47:51.179Z] *** [apiv2] error from fetch(https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/firebaseextensions.googleapis.com, {"headers":{},"method":"GET"}): FetchError: request to https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/firebaseextensions.googleapis.com failed, reason: read ECONNRESET
+[debug] [2024-11-28T09:47:51.583Z] FetchError: request to https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/firebaseextensions.googleapis.com failed, reason: read ECONNRESET
+    at ClientRequest.<anonymous> (C:\Users\gaberscekl\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\node-fetch\lib\index.js:1501:11)
+    at ClientRequest.emit (node:events:518:28)
+    at ClientRequest.emit (node:domain:489:12)
+    at emitErrorEvent (node:_http_client:103:11)
+    at TLSSocket.socketErrorListener (node:_http_client:506:5)
+    at TLSSocket.emit (node:events:518:28)
+    at TLSSocket.emit (node:domain:489:12)
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+[error] 
+[error] Error: Failed to make request to https://serviceusage.googleapis.com/v1/projects/studentski-dogodki/services/firebaseextensions.googleapis.com
