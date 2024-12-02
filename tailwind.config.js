@@ -18,6 +18,19 @@ module.exports = {
       "9xl": "8rem", // Example for 9xl size (128px)
     },
     extend: {
+      keyframes: {
+        gradientSlide: {
+          "0%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" },
+        },
+      },
+      animation: {
+        gradientSlide: "gradientSlide 5s linear infinite",
+      },
+      backgroundSize: {
+        "gradient-size": "500%", // Ensures gradient can slide properly
+      },
       colors: {
         "custom-orange": "#ffb23c",
         "custom-orange-dark-10": "#e69f36",

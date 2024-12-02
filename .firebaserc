@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "studentski-dogodki"
-  }
+    "default": "studentski-dogodki",
+    "staging": "studentski-dogodki"
+  },
+  "targets": {},
+  "etags": {}
 }

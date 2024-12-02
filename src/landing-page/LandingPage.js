@@ -16,7 +16,7 @@ const LandingPage = ({ id }) => {
       {/* Text Section */}
       <div className="text-center space-y-6 mb-8">
         {/* Big Text */}
-        <h1 className="text-8xl sm:text-4xl md:text-5xl font-bold">
+        <h1 className="text-8xl font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-yellow-500 bg-clip-text text-transparent animate-gradientSlide bg-gradient-size">
           Študentski Dogodki
         </h1>
 
